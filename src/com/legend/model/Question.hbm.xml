@@ -1,0 +1,42 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-26 12:58:58 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.legend.model">
+    <class name="Question" table="QUESTIONS">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="questionType" type="java.lang.Integer">
+            <column name="QUESTIONTYPE" />
+        </property>
+        <property name="title" type="java.lang.String">
+            <column name="TITLE" length="60"/>
+        </property>
+        <property name="options" type="java.lang.String">
+            <column name="OPTIONS" length="10"/>
+        </property>
+        <property name="other" type="java.lang.Boolean">
+            <column name="OTHER" />
+        </property>
+        <property name="otherStyle" type="java.lang.Integer">
+            <column name="OTHERSTYLE" />
+        </property>
+        <property name="otherSelectOptions" type="java.lang.String">
+            <column name="OTHERSELECTOPTIONS" length="200"/>
+        </property>
+        <property name="matrixRowTitles" type="java.lang.String">
+            <column name="MATRIXROWTITLES" length="200"/>
+        </property>
+        <property name="matrixColTitles" type="java.lang.String">
+            <column name="MATRIXCOLTITLES" length="200"/>
+        </property>
+        <property name="matrixSelectTitles" type="java.lang.String">
+            <column name="MATRIXSELECTTITLES" length="200"/>
+        </property>
+        <many-to-one name="page" class="Page" fetch="join">
+            <column name="PAGEID" />
+        </many-to-one>
+    </class>
+</hibernate-mapping>

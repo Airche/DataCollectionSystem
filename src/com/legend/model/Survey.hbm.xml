@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-1-26 11:02:46 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.legend.model">
+    <class name="Survey" table="SURVEYS">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="title" type="java.lang.String">
+            <column name="TITLE"  length="60"/>
+        </property>
+        <property name="preText" type="java.lang.String">
+            <column name="PRETEXT"  length="20"/>
+        </property>
+        <property name="exitText" type="java.lang.String">
+            <column name="EXITTEXT" length="20"/>
+        </property>
+        <property name="nextText" type="java.lang.String">
+            <column name="NEXTTEXT" length="20"/>
+        </property>
+        <property name="doneText" type="java.lang.String">
+            <column name="DONETEXT" length="20"/>
+        </property>
+        <many-to-one name="user" class="User" fetch="join">
+            <column name="USERID"  not-null="true"/>
+        </many-to-one>
+        <set name="pages" table="PAGES" inverse="true" lazy="true">
+            <key>
+                <column name="SURVEYID" />
+            </key>
+            <one-to-many class="Page" />
+        </set>
+        <property name="createDate" type="timestamp">
+            <column name="CREATEDATE" />
+        </property>
+    </class>
+</hibernate-mapping>
