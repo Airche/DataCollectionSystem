@@ -12,6 +12,10 @@ spring:业务层框架，管理bean。
        ioc:inverse of control，反转控制。
        aop:aspect oriented program，不改变源代码，还给类增加新的功能。对OOP进行增强。本质就是代理。几种AOP方式：前置、后置、环绕(最常用，场景-事物管理)、异常、引入。
 
+加密算法：md5、sha1
+
+
+
 *************************************
 struts2-访问层
 service-业务层
@@ -33,6 +37,7 @@ hibernate-持久化层
 		ognl-3.0.6.jar
 		struts2-core-2.3.24.1.jar
 		xwork-core-2.3.24.1.jar
+		spring-web-3.0.5.RELEASE.jar
 	[spring]
 		spring-aop-4.2.1.RELEASE.jar
 		spring-aspects-4.2.1.RELEASE.jar
@@ -45,6 +50,7 @@ hibernate-持久化层
 		spring-orm-4.2.1.RELEASE.jar
 		spring-tx-4.2.1.RELEASE.jar
 		
+		spring-test-4.2.1.RELEASE.jar
 		commons-logging-1.1.1.jar
 		cglib-nodep-2.2.jar
 		aopalliance-1.0.jar
@@ -69,3 +75,7 @@ hibernate-持久化层
 		mchange-commons-java-0.2.3.4.jar
 	[数据库驱动]
 		mysql-connector-java-5.1.25.jar
+	[JSP]
+		jstl-1.2.jar
+		standard-1.1.2.jar
+		

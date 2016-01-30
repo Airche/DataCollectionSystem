@@ -10,7 +10,7 @@ public interface BaseService<T> {
 	public void deleteEntity(T t);
 	public void batchEntityBySql(String sql,Object...objects);
 	//读取方法
-	public	T loadEntity(T t,Integer i);
-	public T getEntity(T t,Integer i);
+	public	T loadEntity(Class<T> t,Integer i);
+	public T getEntity(Class<T> t,Integer i);
 	public List<T> findEntityByHql(String hql,Object...objects);
 }

@@ -10,10 +10,11 @@
 
 
 	<context:annotation-config />
-	<context:component-scan base-package="com.legend" />
+	<context:component-scan
+		base-package="com.legend.dao.impl,com.legend.service.impl,com.legend.action" />
 	<aop:aspectj-autoproxy />
 
-	
+
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
 	<bean name="dataSource" destroy-method="close"
@@ -32,21 +33,11 @@
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
 		<property name="dataSource" ref="dataSource" />
-		<property name="mappingResources">
+		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
+		<property name="mappingDirectoryLocations">
 			<list>
-				<value>com/legend/model/User.hbm.xml</value>
-				<value>com/legend/model/Survey.hbm.xml</value>
-				<value>com/legend/model/Page.hbm.xml</value>
-				<value>com/legend/model/Question.hbm.xml</value>
+				<value>classpath:com/legend/model</value>
 			</list>
-		</property>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.format_sql">true</prop>
-				<prop key="hibernate.hbm2ddl.auto">update</prop>
-			</props>
 		</property>
 	</bean>
 
@@ -55,24 +46,38 @@
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>
 
-	<aop:config>
-		<aop:pointcut id="serviceOperation"
-			expression="execution(public * com.legend.*..*.*(..))" />
-		<aop:advisor pointcut-ref="serviceOperation" advice-ref="txAdvice" />
-	</aop:config>
-
 	<tx:advice id="txAdvice" transaction-manager="txManager">
+		<!-- 
+			1、事务传播设置是 REQUIRED
+			2、隔离级别是 DEFAULT；未提交读（脏读、不可重复读、幻读）-提交读（不可重复读、幻读）-重复读（幻读）-顺序
+			3、事务是 读/写
+			4、事务超时默认是依赖于事务系统的，或者事务超时没有被支持。
+			5、任何 RuntimeException 将触发事务回滚，但是任何 checked Exception 将不触发事务回滚
+		 -->
 		<tx:attributes>
-			<tx:method name="save*" propagation="REQUIRED" />
-			<tx:method name="update*" propagation="REQUIRED" />
-			<tx:method name="delete*" propagation="REQUIRED" />
-			<tx:method name="batch*" propagation="REQUIRED" />
-			<tx:method name="load*" propagation="REQUIRED" read-only="true"/>
-			<tx:method name="get*" propagation="REQUIRED" read-only="true"/>
-			<tx:method name="find*" propagation="REQUIRED" read-only="true"/>
-			<tx:method name="*"  read-only="true"/>
+			<!-- 写操作 -->
+			<tx:method name="save*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT" />
+			<!-- 读操作 -->
+			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT"
+				read-only="true" />
+			<tx:method name="get*" propagation="REQUIRED" isolation="DEFAULT"
+				read-only="true" />
+			<tx:method name="find*" propagation="REQUIRED" isolation="DEFAULT"
+				read-only="true" />
+
+			<tx:method name="*" propagation="REQUIRED" isolation="DEFAULT"
+				read-only="true" />
 		</tx:attributes>
 	</tx:advice>
+
+	<aop:config>
+		<aop:pointcut id="serviceOperation"
+			expression="(execution(public * com.legend.service..*.*(..)) or execution(public * com.legend.dao..*.*(..)))" />
+		<aop:advisor advice-ref="txAdvice"  pointcut-ref="serviceOperation"/>
+	</aop:config>
 
 	<bean name="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory" />

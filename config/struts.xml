@@ -3,10 +3,22 @@
 	"-//Apache Software Foundation//DTD Struts Configuration 2.3//EN"
 	"http://struts.apache.org/dtds/struts-2.3.dtd">
 <struts>
+	<constant name="struts.i18n.encoding" value="UTF-8" />
+	<constant name="struts.devMode" value="true" />
+	<constant name="struts.ui.theme" value="simple" />
+	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
+
 	<package name="DataCollectionSystem" namespace="/" extends="struts-default">
-		<action name=""  class="">
-			<result>
-			</result>
+		<action name="RegAction_*" class="regAction" method="{1}">
+			<result name="regPage">/reg.jsp</result>
+			<result name="success" type="redirect">/index.jsp</result>
+			<result name="input">/reg.jsp</result>
+		</action>
+		<action name="LoginAction_*" class="loginAction" method="{1}">
+			<result name="loginPage">/index.jsp</result>
+			<result name="input">/index.jsp</result>
+			<result >/index.jsp</result>
 		</action>
 	</package>
+
 </struts>

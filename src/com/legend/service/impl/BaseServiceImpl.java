@@ -5,17 +5,12 @@ import java.util.List;
 import com.legend.dao.BaseDao;
 import com.legend.service.BaseService;
 
-@SuppressWarnings("unchecked")
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
-	private BaseDao baseDao;
+	private BaseDao<T> baseDao;
 	
-	public BaseDao getBaseDao() {
-		return baseDao;
-	}
-	
-	//怎么注入？？
-	public void setBaseDao(BaseDao baseDao) {
+	//此处不进行注入，子类进行覆盖此方法，子类中进行注解注入
+	public void setBaseDao(BaseDao<T> baseDao) {
 		this.baseDao = baseDao;
 	}
 
@@ -45,12 +40,12 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 	}
 
 	@Override
-	public T loadEntity(T t, Integer i) {
+	public T loadEntity(Class<T> t, Integer i) {
 		return (T) baseDao.loadEntity(t, i);
 	}
 
 	@Override
-	public T getEntity(T t, Integer i) {
+	public T getEntity(Class<T> t, Integer i) {
 		return (T) baseDao.getEntity(t, i);
 	}
 

@@ -66,12 +66,12 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	}
 
 	@Override
-	public T loadEntity(T t, Integer i) {
+	public T loadEntity(Class<T> t, Integer i) {
 		return (T)hibernateTemplate.load(clazz, i);
 	}
 
 	@Override
-	public T getEntity(T t, Integer i) {
+	public T getEntity(Class<T> t, Integer i) {
 		return (T)hibernateTemplate.get(clazz, i);
 	}
 
