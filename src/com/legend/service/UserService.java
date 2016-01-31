@@ -9,4 +9,6 @@ public interface UserService extends BaseService<User> {
 	 */
 	boolean isRegisted(String email);
 
+	User validateLoginInfo(String email, String md5);
+
 }

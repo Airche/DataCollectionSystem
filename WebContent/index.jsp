@@ -8,16 +8,21 @@
 <title>用户登录</title>
 </head>
 <body>
+
+	<jsp:include page="head.jsp"/>
+
 	<c:if test="${user==null }">
 	<form action="${pageContext.request.contextPath}/LoginAction_doLogin" method="post">
 		登录邮箱:<input type="text" name="email"  value="${email}"/>		${errors.email }	<br/>
 		登录密码:<input type="password" name="password" value="${password}"/>		${errors.password }	<br/>
-		<input type="submit" value="登录" />
-		<s:debug></s:debug>
+		<input type="submit" value="登录" />		<a href="${pageContext.request.contextPath }/RegAction_toRegPage">注册</a>
+		<s:actionerror/>
 	</form>
 	</c:if>
 	<c:if test="${user!=null}">
-		欢迎:${user.nickName }
+		欢迎:${user.nickName }  <a href="${pageContext.request.contextPath }/LoginAction_doLogout">退出</a>  <br/>
+		<a href="${pageContext.request.contextPath }/SurveyAction_mySurveys">我的调查</a>	<br/>		
 	</c:if>
+	<s:debug></s:debug>
 </body>
 </html>
