@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Survey {
 	private Integer id;
-	private String title;
+	private String title="未命名";
 	private String preText;
 	private String exitText;
 	private String nextText;
@@ -85,6 +85,11 @@ public class Survey {
 
 	public void setCreateDate(Date createDate) {
 		this.createDate = createDate;
+	}
+
+	@Override
+	public String toString() {
+		return "Survey [id=" + id +  "]";
 	}
 
 }

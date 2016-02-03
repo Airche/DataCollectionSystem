@@ -80,4 +80,9 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		return (List<T>) hibernateTemplate.find(hql, objects);
 	}
 
+	@Override
+	public List<T> findEntityByHqlForPage(T t,final int offset,final int length) {
+		return (List<T>) hibernateTemplate.findByExample(t, offset, length);
+	}
+
 }

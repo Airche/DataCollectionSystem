@@ -2,8 +2,6 @@ package com.legend.dao;
 
 import java.util.List;
 
-import com.legend.model.User;
-
 /*
  * 基础Dao接口
  */
@@ -18,4 +16,5 @@ public interface BaseDao<T> {
 	public	T loadEntity(Class<T> t,Integer i);
 	public T getEntity(Class<T> t,Integer i);
 	public List<T> findEntityByHql(String hql,Object...objects);
+	public List<T> findEntityByHqlForPage(T t,final int offset,final int length);
 }

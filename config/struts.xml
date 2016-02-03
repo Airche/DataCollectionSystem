@@ -9,6 +9,21 @@
 	<constant name="struts.enable.DynamicMethodInvocation" value="true" />
 
 	<package name="DataCollectionSystem" namespace="/" extends="struts-default">
+	
+		<interceptors>
+			<interceptor name="LoginInterceptor" class="com.legend.action.intercepor.LoginInterceptor"></interceptor>
+			<interceptor-stack name="DataCollectionStack">
+				<interceptor-ref name="LoginInterceptor" />
+				<interceptor-ref name="defaultStack" />
+			</interceptor-stack>
+		</interceptors>
+		
+		<default-interceptor-ref name="DataCollectionStack" />
+		
+		<global-results>
+			<result name="login">/index.jsp</result>
+		</global-results>
+	
 		<action name="RegAction_*" class="regAction" method="{1}">
 			<result name="regPage">/reg.jsp</result>
 			<result name="success" type="redirect">/index.jsp</result>
@@ -21,8 +36,9 @@
 		</action>
 		<action name="SurveyAction_*" class="surveyAction" method="{1}">
 			<result name="mySurveyListPage">/mySurveyList.jsp</result>
+			<result name="mySurveyListPageForPage">/mySurveyListForPage.jsp</result>
+			<result name="designSurveysPage">/designSurveys.jsp</result>
 			<result>/index.jsp</result>
 		</action>
 	</package>
-
 </struts>

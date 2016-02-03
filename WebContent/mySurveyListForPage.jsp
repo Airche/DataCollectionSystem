@@ -36,6 +36,16 @@
 				</tr>
 			</c:forEach>
 		</table>
+		当前页数:<input type="text" name="curPage"  value=${curPage} readonly="readonly"  style="width:15px;" >
+		<input type="hidden" name="pageSize" value=${pageSize} >
+		总页数:<input type="text" name="pageCount" value=${pageCount} readonly="readonly" style="width:15px;" >
+		 <c:if test="${curPage>1}">
+			 <a href="${pageContext.request.contextPath}/SurveyAction_mySurveysForPage?curPage=${curPage}&pageSize=${pageSize}&pageCount=${pageCount}&nextForward=-1">上一页</a>	
+		 </c:if>	
+		 <c:if test="${curPage<pageCount}">
+			 <a href="${pageContext.request.contextPath}/SurveyAction_mySurveysForPage?curPage=${curPage}&pageSize=${pageSize}&pageCount=${pageCount}&nextForward=1">下一页</a>		
+		 </c:if>	
+		
 	</c:if>
 </body>
 </html>

@@ -21,7 +21,6 @@
 	</c:if>
 	<c:if test="${user!=null}">
 		欢迎:${user.nickName }  <a href="${pageContext.request.contextPath }/LoginAction_doLogout">退出</a>  <br/>
-		<a href="${pageContext.request.contextPath }/SurveyAction_mySurveys">我的调查</a>	<br/>		
 	</c:if>
 	<s:debug></s:debug>
 </body>

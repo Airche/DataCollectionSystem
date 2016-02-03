@@ -1,7 +1,7 @@
 package com.legend.action;
 
 import java.security.NoSuchAlgorithmException;
-import java.util.List;
+import java.util.Date;
 
 import javax.annotation.Resource;
 
@@ -14,7 +14,6 @@ import com.legend.service.UserService;
 import com.legend.util.ByteConvUtil;
 import com.legend.util.DigestUtil;
 import com.legend.util.validateUtil;
-import com.mchange.lang.ByteUtils;
 
 @Controller("regAction")
 @Scope("prototype")
@@ -47,6 +46,7 @@ public class RegAction extends BaseAction<User> {
 	public String doReg() {
 		try {
 			model.setPassword(ByteConvUtil.ByteToHex(DigestUtil.encode(model.getPassword())));
+			model.setRegDate(new Date());
 		} catch (NoSuchAlgorithmException e) {
 			this.addFieldError("password", "password加密失败");
 		}

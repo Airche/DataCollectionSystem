@@ -7,6 +7,7 @@
 <title>用户注册</title>
 </head>
 <body>
+	<jsp:include page="head.jsp"/>
 	<form action="${pageContext.request.contextPath}/RegAction_doReg" method="post">
 		登录邮箱:<input type="text" name="email"  value="${email}"/>		${errors.email }	<br/>
 		登录密码:<input type="password" name="password" value="${password}"/>		${errors.password }	<br/>

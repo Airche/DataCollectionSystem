@@ -13,6 +13,7 @@ public abstract class BaseAction<T> extends ActionSupport implements ModelDriven
 
 	public T model;
 	
+	@SuppressWarnings("unchecked")
 	public BaseAction(){
 		ParameterizedType type = (ParameterizedType) this.getClass().getGenericSuperclass();
 		Class clazz = (Class) type.getActualTypeArguments()[0];

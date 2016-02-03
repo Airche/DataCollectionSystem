@@ -6,7 +6,7 @@ import java.util.Set;
 
 public class Page {
 	private Integer id;
-	private String title;
+	private String title="未定义";
 	private String description;
 	private Survey survey;
 	private Set<Question> questions = new HashSet<Question>();

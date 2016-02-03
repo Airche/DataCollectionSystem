@@ -60,6 +60,7 @@
 			<tx:method name="update*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="delete*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="new*" propagation="REQUIRED" isolation="DEFAULT" />
 			<!-- 读操作 -->
 			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT"
 				read-only="true" />
@@ -75,7 +76,7 @@
 
 	<aop:config>
 		<aop:pointcut id="serviceOperation"
-			expression="(execution(public * com.legend.service..*.*(..)) or execution(public * com.legend.dao..*.*(..)))" />
+			expression="execution(public * com.legend.service..*.*(..))" />
 		<aop:advisor advice-ref="txAdvice"  pointcut-ref="serviceOperation"/>
 	</aop:config>
 
