@@ -2,6 +2,7 @@ package com.legend.model;
 
 public class Question {
 	private Integer id;
+	//题型0-8
 	private Integer questionType;
 	private String title;
 	private String options;

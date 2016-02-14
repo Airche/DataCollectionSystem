@@ -28,10 +28,6 @@ public class LoginAction extends BaseAction<User> implements SessionAware {
 		return "loginPage";
 	}
 	
-	@Override
-	public void setSession(Map<String, Object> session) {
-		this.sessionMap = session;
-	}
 	
 	public String doLogin(){
 		return SUCCESS;
@@ -53,6 +49,12 @@ public class LoginAction extends BaseAction<User> implements SessionAware {
 	public String doLogout(){
 		this.sessionMap.remove("user");
 		return SUCCESS;
+	}
+
+
+	@Override
+	public void setSession(Map<String, Object> session) {
+		this.sessionMap = session;
 	}
 
 }
