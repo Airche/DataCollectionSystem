@@ -10,14 +10,16 @@
 </head>
 <body>
 	<jsp:include page="head.jsp"></jsp:include>
-	<br /> ${model.id} ${model.title}<br/>
+	<br /> ${model.id} ${model.title}	<a href="${pageContext.request.contextPath}/PageAction_toAddPagePage?surveyId=${model.id}">增加页</a><br/>
 	<c:forEach var="p" items="${model.pages}">
- 		 页面标题:${p.title}<br/>
- 		 <c:forEach var="q"  items="$(p.questions)">
- 		 	问题类型:${q.questionType}<br/>
+	<br/>
+ 		 页面标题:${p.id} ${p.title}		<br/>	   <a href="${pageContext.request.contextPath}/PageAction_editPagePage?surveyId=${model.id}&pageId=${p.id}">编辑页</a><br/>
+ 		 <c:forEach var="q"  items="${p.questions}">
+ 		 	问题类型:${q.id} ${q.title}<br/>
  		 	<c:forEach var="opt" items="${fn:split(q.options, '-')}">
  		 		选项名称:${opt}
  		 	</c:forEach>
+ 		 	<br/>
  		 </c:forEach>
 	</c:forEach>
 	<s:debug></s:debug>

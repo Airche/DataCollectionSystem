@@ -25,6 +25,8 @@
 				<th>ID</th>
 				<th>调查标题</th>
 				<th>创建时间</th>
+				<th>设计调查</th>
+				<th>编辑调查</th>
 			</tr>
 			<c:forEach items="${mySurveys}" var="s">
 				<%--JSTL，EL表达式 --%>
@@ -33,6 +35,8 @@
 					<td>${s.title }</td>
 					<td><fmt:formatDate value="${s.createDate }"
 							pattern="yyyy-MM-dd HH:MM" /></td>
+					<td><a href="${pageContext.request.contextPath}/SurveyAction_getSurvey?surveyId=${s.id}">设计</a></td>
+					<td><a href="${pageContext.request.contextPath}/SurveyAction_editSurvey?surveyId=${s.id}">编辑</a></td>
 				</tr>
 			</c:forEach>
 		</table>

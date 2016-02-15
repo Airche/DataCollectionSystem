@@ -26,7 +26,7 @@
         <many-to-one name="user" class="User" fetch="join">
             <column name="USERID"  not-null="true"/>
         </many-to-one>
-        <set name="pages" table="PAGES" inverse="true" lazy="true">
+        <set name="pages" table="PAGES" inverse="true" lazy="true" order-by="id">
             <key>
                 <column name="SURVEYID" />
             </key>

@@ -17,7 +17,7 @@
         <many-to-one name="survey" class="Survey" fetch="join">
             <column name="SURVEYID" not-null="true"/>
         </many-to-one>
-        <set name="questions" table="QUESTIONS" inverse="true" lazy="true">
+        <set name="questions" table="QUESTIONS" inverse="true" lazy="true" order-by="id">
             <key>
                 <column name="PAGEID" />
             </key>
