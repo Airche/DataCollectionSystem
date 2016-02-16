@@ -21,5 +21,9 @@ public interface SurveyService {
 	Survey getSurveyWithChildren(int surveyId);
 
 	void update(Survey model);
+	
+	void saveOrUpdatePage(Page model);
+
+	Page getPageById(int pageId);
 
 }

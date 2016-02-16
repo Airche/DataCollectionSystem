@@ -13,7 +13,7 @@
 	<br /> ${model.id} ${model.title}	<a href="${pageContext.request.contextPath}/PageAction_toAddPagePage?surveyId=${model.id}">增加页</a><br/>
 	<c:forEach var="p" items="${model.pages}">
 	<br/>
- 		 页面标题:${p.id} ${p.title}		<br/>	   <a href="${pageContext.request.contextPath}/PageAction_editPagePage?surveyId=${model.id}&pageId=${p.id}">编辑页</a><br/>
+ 		 页面标题:${p.id} ${p.title}		<br/>	   <a href="${pageContext.request.contextPath}/PageAction_toEditPagePage?surveyId=${model.id}&pageId=${p.id}">编辑页</a><br/>
  		 <c:forEach var="q"  items="${p.questions}">
  		 	问题类型:${q.id} ${q.title}<br/>
  		 	<c:forEach var="opt" items="${fn:split(q.options, '-')}">

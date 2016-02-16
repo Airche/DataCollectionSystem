@@ -9,7 +9,6 @@ import com.legend.action.intercepor.UserAware;
 import com.legend.model.Page;
 import com.legend.model.Survey;
 import com.legend.model.User;
-import com.legend.service.PageService;
 import com.legend.service.SurveyService;
 
 @Controller("pageAction")
@@ -20,8 +19,8 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 	private int surveyId;
 	private int pageId;
 	
-	@Resource(name="pageService")
-	private PageService pageService;
+	@Resource(name="surveyService")
+	private SurveyService surveyService;
 	
 	@Override
 	public void setUser(User user) {
@@ -32,8 +31,8 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 		return "addPage";
 	}
 	
-	public String editPagePage(){
-		this.model = this.pageService.getPageById(this.pageId);
+	public String toEditPagePage(){
+		this.model = this.surveyService.getPageById(this.pageId);
 		return "editPage";
 	}
 	
@@ -41,7 +40,7 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 		Survey survey = new Survey();
 		survey.setId(this.surveyId);
 		this.model.setSurvey(survey);
-		this.pageService.saveOrUpdate(model);
+		this.surveyService.saveOrUpdatePage(model);
 		return "designSurveysAction";
 	}
 
