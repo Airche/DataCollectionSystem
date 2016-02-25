@@ -105,4 +105,12 @@ public class SurveyServiceImpl implements SurveyService {
 		return (Page) this.pageDao.getEntity(Page.class, pageId);
 	}
 
+	@Override
+	public void saveOrUpdateQuestion(int pageId, Question model) {
+		Page page = (Page) this.pageDao.getEntity(Page.class, pageId);
+		page.getQuestions().add(model);
+		model.setPage(page);
+		this.questionDao.saveOrUpdateEntity(model);	
+	}
+
 }

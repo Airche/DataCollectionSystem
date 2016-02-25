@@ -3,6 +3,7 @@ package com.legend.service;
 import java.util.List;
 
 import com.legend.model.Page;
+import com.legend.model.Question;
 import com.legend.model.Survey;
 import com.legend.model.User;
 
@@ -25,5 +26,7 @@ public interface SurveyService {
 	void saveOrUpdatePage(Page model);
 
 	Page getPageById(int pageId);
+
+	void saveOrUpdateQuestion(int pageId, Question model);
 
 }
