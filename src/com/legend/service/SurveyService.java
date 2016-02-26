@@ -27,6 +27,10 @@ public interface SurveyService {
 
 	Page getPageById(int pageId);
 
-	void saveOrUpdateQuestion(int pageId, Question model);
+	void saveOrUpdateQuestion(Question model);
+
+	void deleteQuestion(int questionId);
+
+	void deletePage(int pageId);
 
 }

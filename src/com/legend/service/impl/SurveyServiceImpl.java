@@ -26,6 +26,9 @@ public class SurveyServiceImpl implements SurveyService {
 
 	@Resource(name = "questionDao")
 	private BaseDao questionDao;
+	
+	@Resource(name = "answerDao")
+	private BaseDao answerDao;
 
 	@Override
 	public List<Survey> findMySurveys(User user) {
@@ -106,11 +109,26 @@ public class SurveyServiceImpl implements SurveyService {
 	}
 
 	@Override
-	public void saveOrUpdateQuestion(int pageId, Question model) {
-		Page page = (Page) this.pageDao.getEntity(Page.class, pageId);
-		page.getQuestions().add(model);
-		model.setPage(page);
+	public void saveOrUpdateQuestion(Question model) {
 		this.questionDao.saveOrUpdateEntity(model);	
+	}
+
+	@Override
+	public void deleteQuestion(int questionId) {
+		String sql = "delete from ANSWERS where questionId=?";
+		this.answerDao.batchEntityBySql(sql, questionId);
+		sql = "delete from QUESTIONS where id=?";
+		this.questionDao.batchEntityBySql(sql, questionId);
+	}
+
+	@Override
+	public void deletePage(int pageId) {
+		String sql = "delete from ANSWERS where questionId in (select id from QUESTIONS where pageid=?)";
+		this.answerDao.batchEntityBySql(sql, pageId);
+		sql = "delete from QUESTIONS where pageid=?";
+		this.questionDao.batchEntityBySql(sql, pageId);
+		sql = "delete from PAGES where id=?";
+		this.pageDao.batchEntityBySql(sql, pageId);
 	}
 
 }

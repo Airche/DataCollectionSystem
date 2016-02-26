@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.legend.action.intercepor.UserAware;
+import com.legend.model.Page;
 import com.legend.model.Question;
 import com.legend.model.User;
 import com.legend.service.SurveyService;
@@ -17,6 +18,7 @@ public class QuestionAction extends BaseAction<Question> implements UserAware{
 	private User user;
 	private int surveyId;
 	private int pageId;
+	private int questionId;
 
 	@Resource(name = "surveyService")
 	private SurveyService surveyService;
@@ -35,7 +37,15 @@ public class QuestionAction extends BaseAction<Question> implements UserAware{
 	}
 	
 	public String saveOrUpdate(){
-		this.surveyService.saveOrUpdateQuestion(pageId,model);
+		Page page = new Page();
+		page.setId(pageId);
+		model.setPage(page);
+		this.surveyService.saveOrUpdateQuestion(model);
+		return "designSurveysAction";
+	}
+	
+	public String deleteQuestion(){
+		this.surveyService.deleteQuestion(questionId);
 		return "designSurveysAction";
 	}
 	
@@ -55,4 +65,13 @@ public class QuestionAction extends BaseAction<Question> implements UserAware{
 		this.pageId = pageId;
 	}
 
+	public int getQuestionId() {
+		return questionId;
+	}
+
+	public void setQuestionId(int questionId) {
+		this.questionId = questionId;
+	}
+	
+	
 }

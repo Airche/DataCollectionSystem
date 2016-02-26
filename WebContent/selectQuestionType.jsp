@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="/struts-tags" prefix="s"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -8,8 +9,8 @@
 <body>
 	<jsp:include page="head.jsp" />
 	<form action="${pageContext.request.contextPath}/QuestionAction_toDesignQuestionPage" method="post">
-		<input type="text" name="surveyId" value="${surveyId }"/>
-		<input type="text" name="pageId" value="${pageId }"/>
+		<input type="hidden" name="surveyId" value="${surveyId }"/>
+		<input type="hidden" name="pageId" value="${pageId }"/>
 		<select name="questionType">
 			<option selected="selected">--请选择问题题型--</option>
 			<option value="0">非矩阵式横向单选按钮</option>
@@ -24,5 +25,6 @@
 		</select>
 		<input type="submit" value="确定"/>
 	</form>
+	<s:debug></s:debug>
 </body>
 </html>

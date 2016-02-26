@@ -40,7 +40,15 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 		Survey survey = new Survey();
 		survey.setId(this.surveyId);
 		this.model.setSurvey(survey);
+		if(model.getId()==0){
+			model.setId(null);
+		}
 		this.surveyService.saveOrUpdatePage(model);
+		return "designSurveysAction";
+	}
+	
+	public String deletePage(){
+		this.surveyService.deletePage(pageId);
 		return "designSurveysAction";
 	}
 
