@@ -41,7 +41,7 @@ public class SurveyServiceImpl implements SurveyService {
 	public Survey newSurvey(User user) {
 		Survey survey = new Survey();
 		Page page = new Page();
-		/***********/
+		/***********
 		Question question = new Question();
 		question.setTitle("question title");
 		question.setQuestionType(1);
@@ -49,7 +49,7 @@ public class SurveyServiceImpl implements SurveyService {
 		page.getQuestions().add(question);
 		question.setPage(page);
 		this.questionDao.saveEntity(question);
-		/**********/
+		**********/
 		survey.setUser(user);
 		survey.getPages().add(page);
 		survey.setCreateDate(new Date());
@@ -130,5 +130,38 @@ public class SurveyServiceImpl implements SurveyService {
 		sql = "delete from PAGES where id=?";
 		this.pageDao.batchEntityBySql(sql, pageId);
 	}
+
+	/*
+	 * 不用级联删除，因为效率低
+	 */
+	@Override
+	public void deleteSurvey(int surveyId) {
+		String sql = "delete from ANSWERS where surveyid=?";
+		this.answerDao.batchEntityBySql(sql, surveyId);
+		sql = "delete from QUESTIONS where pageid in (select id from PAGES where surveyid=?)";
+		this.questionDao.batchEntityBySql(sql, surveyId);
+		sql = "delete from PAGES where surveyid=?";
+		this.pageDao.batchEntityBySql(sql, surveyId);
+		sql= "delete from SURVEYS where id=?";
+		this.surveyDao.batchEntityBySql(sql, surveyId);
+	}
+
+	@Override
+	public Question getQuestion(Integer id) {
+		return (Question) this.questionDao.getEntity(Question.class, id);
+	}
+
+	@Override
+	public void clearAnswer(int surveyId) {
+		String sql = "delete from ANSWERS where surveyid=?";
+		this.answerDao.batchEntityBySql(sql, surveyId);
+	}
+
+	@Override
+	public void toogleStatus(int surveyId) {
+		String sql = "update SURVEYS set closed = !closed where id=?";
+		this.surveyDao.batchEntityBySql(sql, surveyId);
+	}
+
 
 }

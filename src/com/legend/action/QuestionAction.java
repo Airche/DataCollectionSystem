@@ -49,6 +49,11 @@ public class QuestionAction extends BaseAction<Question> implements UserAware{
 		return "designSurveysAction";
 	}
 	
+	public String toEditQuestionPage(){
+		model = this.surveyService.getQuestion(model.getId());
+		return ""+model.getQuestionType();
+	}
+	
 	public int getSurveyId() {
 		return surveyId;
 	}

@@ -10,8 +10,9 @@
 		<jsp:include page="head.jsp" />
 	
 	<form action="${pageContext.request.contextPath}/QuestionAction_saveOrUpdate?surveyId=${surveyId}&pageId=${pageId}" method="post">
-		<input type="hidden" name="questionType" value="0"/>
-		<input type="text" name="title"/>
+		<input type="hidden" name="id" value="${model.id}"/>
+		<input type="hidden" name="questionType" value="${model.questionType}"/>
+		<input type="text" name="title" value="${model.title}"/>
 		
 		<input type="submit" value="确定"/>
 	</form>

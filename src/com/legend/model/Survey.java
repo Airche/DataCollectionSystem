@@ -13,6 +13,8 @@ public class Survey {
 	private String doneText;
 	private Date createDate;
 	private User user;
+	private Boolean closed=false;
+	private String logoPhotoPath;
 	private Set<Page> pages = new HashSet<Page>();
 
 	public Integer getId() {
@@ -92,4 +94,13 @@ public class Survey {
 		return "Survey [id=" + id +  "]";
 	}
 
+	public boolean isClosed() {
+		return closed;
+	}
+
+	public void setClosed(boolean closed) {
+		this.closed = closed;
+	}
+
+	
 }

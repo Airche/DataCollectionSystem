@@ -35,5 +35,11 @@
         <property name="createDate" type="timestamp">
             <column name="CREATEDATE" />
         </property>
+        <property name="closed" type="boolean" update="false">
+        	<column name="CLOSED" />
+        </property>
+        <property name="logoPhotoPath" type="java.lang.String">
+        	<column name="LOGOPHOTOPATH" length="200"></column>
+        </property>
     </class>
 </hibernate-mapping>

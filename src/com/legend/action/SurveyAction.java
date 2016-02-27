@@ -72,6 +72,25 @@ public class SurveyAction extends BaseAction<Survey> implements UserAware{
 		this.model =  this.surveyService.getSurveyWithChildren(this.surveyId);
 		return "designSurveysPage";
 	}
+	
+	public String deleteSurvey(){
+		this.surveyService.deleteSurvey(this.surveyId);
+		return "findMySurveyAction";
+	}
+	
+	public String clearAnswers(){
+		this.surveyService.clearAnswer(this.surveyId);
+		return "findMySurveyAction";
+	}
+	
+	public String toogleStatus(){
+		this.surveyService.toogleStatus(this.surveyId);
+		return "findMySurveyAction";		
+	}
+	
+	public String toAddLogoPage(){
+		return "addLogoPage";
+	}
 
 	public List<Survey> getMySurveys() {
 		return mySurveys;

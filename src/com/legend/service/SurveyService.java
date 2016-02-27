@@ -33,4 +33,12 @@ public interface SurveyService {
 
 	void deletePage(int pageId);
 
+	void deleteSurvey(int surveyId);
+
+	Question getQuestion(Integer id);
+
+	void clearAnswer(int surveyId);
+
+	void toogleStatus(int surveyId);
+
 }

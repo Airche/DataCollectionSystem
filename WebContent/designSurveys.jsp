@@ -10,14 +10,18 @@
 </head>
 <body>
 	<jsp:include page="head.jsp"></jsp:include>
-	<br /> ${model.id} ${model.title}	<a href="${pageContext.request.contextPath}/PageAction_toAddPagePage?surveyId=${model.id}">增加页</a><br/>
+	<br /> ${model.id} ${model.title}	
+	<a href="${pageContext.request.contextPath}/SurveyAction_toAddLogoPage?surveyId=${model.id}">增加LOGO</a>
+	<a href="${pageContext.request.contextPath}/PageAction_toAddPagePage?surveyId=${model.id}">增加页</a><br/>
 	<c:forEach var="p" items="${model.pages}">
 	<br/>
- 		 页面标题:${p.id} ${p.title}	 <a href="${pageContext.request.contextPath}/PageAction_deletePage?surveyId=${model.id}&pageId=${p.id}">删除页面</a>	<br/>	   
+ 		 页面标题:${p.id} ${p.title}	 <a href="${pageContext.request.contextPath}/PageAction_deletePage?surveyId=${model.id}&pageId=${p.id}">删除页面</a>		   
  		 <a href="${pageContext.request.contextPath}/PageAction_toEditPagePage?surveyId=${model.id}&pageId=${p.id}">编辑页</a> 
  		 <a href="${pageContext.request.contextPath }/QuestionAction_toSelectQuestionType?surveyId=${model.id}&pageId=${p.id}">增加问题</a><br/> 
  		 <c:forEach var="q"  items="${p.questions}">
- 		 	问题类型:${q.id} ${q.title}		<a href="${pageContext.request.contextPath}/QuestionAction_deleteQuestion?surveyId=${model.id}&questionId=${q.id}">删除问题</a>  <br/>
+ 		 	问题类型:${q.id} ${q.title}		
+ 		 		<a href="${pageContext.request.contextPath}/QuestionAction_toEditQuestionPage?surveyId=${model.id}&pageId=${p.id}&id=${q.id}">编辑问题</a>
+ 		 		<a href="${pageContext.request.contextPath}/QuestionAction_deleteQuestion?surveyId=${model.id}&questionId=${q.id}">删除问题</a>  <br/>
  		 	<c:forEach var="opt" items="${fn:split(q.options, '-')}">
  		 		选项名称:${opt}
  		 	</c:forEach>
