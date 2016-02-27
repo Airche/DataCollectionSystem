@@ -1,13 +1,17 @@
 package com.legend.action;
 
+import java.io.File;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
 import javax.annotation.Resource;
+import javax.servlet.ServletContext;
 
+import org.apache.struts2.util.ServletContextAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.context.ServletConfigAware;
 
 import com.legend.action.intercepor.UserAware;
 import com.legend.model.Survey;
@@ -16,7 +20,7 @@ import com.legend.service.SurveyService;
 
 @Controller("surveyAction")
 @Scope("prototype")
-public class SurveyAction extends BaseAction<Survey> implements UserAware{
+public class SurveyAction extends BaseAction<Survey> implements UserAware,ServletContextAware{
 	
 	private Map<String, Object> sessionMap;
 	private List<Survey> mySurveys;
@@ -25,6 +29,9 @@ public class SurveyAction extends BaseAction<Survey> implements UserAware{
 	private int pageCount;
 	private int nextForward ;
 	private int surveyId;
+	private File logo;
+	private String logoFileName;
+	private ServletContext servletContext;
 	
 	@Resource(name="surveyService")
 	private SurveyService surveyService;
@@ -91,6 +98,25 @@ public class SurveyAction extends BaseAction<Survey> implements UserAware{
 	public String toAddLogoPage(){
 		return "addLogoPage";
 	}
+	
+	public String addLogo(){
+		String newFileName = System.nanoTime()+this.logoFileName.substring(this.logoFileName.lastIndexOf("."));
+		String newPathName = this.servletContext.getRealPath("/upload")+"/"+newFileName;
+		File newFile = new File(newPathName);
+		logo.renameTo(newFile);
+		this.surveyService.addLogoPath(this.surveyId,"/upload/"+newFileName);
+		return "designSurveysAction";
+	}
+	
+	public boolean fileExist(){
+		Survey survey= this.surveyService.getSurvey(model.getId());
+		if(survey.getLogoPhotoPath()!=null){
+			String newPathName = this.servletContext.getRealPath("/upload")+"/"+survey.getLogoPhotoPath();
+			File newFile = new File(newPathName);
+			return newFile.exists();
+		}
+		return false;
+	}
 
 	public List<Survey> getMySurveys() {
 		return mySurveys;
@@ -142,6 +168,27 @@ public class SurveyAction extends BaseAction<Survey> implements UserAware{
 
 	public void setSurveyId(int surveyId) {
 		this.surveyId = surveyId;
+	}
+
+	public File getLogo() {
+		return logo;
+	}
+
+	public void setLogo(File logo) {
+		this.logo = logo;
+	}
+
+	public String getLogoFileName() {
+		return logoFileName;
+	}
+
+	public void setLogoFileName(String logoFileName) {
+		this.logoFileName = logoFileName;
+	}
+
+	@Override
+	public void setServletContext(ServletContext servletContext) {
+		this.servletContext = servletContext;
 	}
 	
 }

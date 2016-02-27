@@ -94,12 +94,21 @@ public class Survey {
 		return "Survey [id=" + id +  "]";
 	}
 
-	public boolean isClosed() {
+
+	public Boolean getClosed() {
 		return closed;
 	}
 
-	public void setClosed(boolean closed) {
+	public void setClosed(Boolean closed) {
 		this.closed = closed;
+	}
+
+	public String getLogoPhotoPath() {
+		return logoPhotoPath;
+	}
+
+	public void setLogoPhotoPath(String logoPhotoPath) {
+		this.logoPhotoPath = logoPhotoPath;
 	}
 
 	

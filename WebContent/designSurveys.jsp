@@ -11,6 +11,10 @@
 <body>
 	<jsp:include page="head.jsp"></jsp:include>
 	<br /> ${model.id} ${model.title}	
+	<jsp:useBean id="util" class="com.legend.action.SurveyAction" scope="page" />
+	<c:if test="${util.fileExist()}">
+		<img  src="${pageContext.request.contextPath}${model.logoPhotoPath}" height="25px" width="25pxs">
+	</c:if>
 	<a href="${pageContext.request.contextPath}/SurveyAction_toAddLogoPage?surveyId=${model.id}">增加LOGO</a>
 	<a href="${pageContext.request.contextPath}/PageAction_toAddPagePage?surveyId=${model.id}">增加页</a><br/>
 	<c:forEach var="p" items="${model.pages}">

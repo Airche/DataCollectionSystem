@@ -41,4 +41,6 @@ public interface SurveyService {
 
 	void toogleStatus(int surveyId);
 
+	void addLogoPath(int surveyId, String string);
+
 }

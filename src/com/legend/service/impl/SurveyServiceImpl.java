@@ -163,5 +163,11 @@ public class SurveyServiceImpl implements SurveyService {
 		this.surveyDao.batchEntityBySql(sql, surveyId);
 	}
 
+	@Override
+	public void addLogoPath(int surveyId, String logoPhotoPath) {
+		String sql = "update SURVEYS set logoPhotoPath=? where id=?";
+		this.surveyDao.batchEntityBySql(sql, logoPhotoPath,surveyId);
+	}
+
 
 }
