@@ -8,6 +8,7 @@ import java.util.Map;
 import javax.annotation.Resource;
 import javax.servlet.ServletContext;
 
+import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.util.ServletContextAware;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
@@ -32,7 +33,16 @@ public class SurveyAction extends BaseAction<Survey> implements UserAware,Servle
 	private File logo;
 	private String logoFileName;
 	private ServletContext servletContext;
+	private String inputPage;
 	
+	public String getInputPage() {
+		return inputPage;
+	}
+
+	public void setInputPage(String inputPage) {
+		this.inputPage = inputPage;
+	}
+
 	@Resource(name="surveyService")
 	private SurveyService surveyService;
 	
@@ -99,19 +109,24 @@ public class SurveyAction extends BaseAction<Survey> implements UserAware,Servle
 		return "addLogoPage";
 	}
 	
+	//在prepare拦截器中为inputPage赋值
+	public void prepareAddLogo(){
+		this.inputPage="/addLogo.jsp";		
+	}
+	
 	public String addLogo(){
 		String newFileName = System.nanoTime()+this.logoFileName.substring(this.logoFileName.lastIndexOf("."));
-		String newPathName = this.servletContext.getRealPath("/upload")+"/"+newFileName;
+		String newPathName = this.servletContext.getRealPath("\\upload")+"\\"+newFileName;
 		File newFile = new File(newPathName);
 		logo.renameTo(newFile);
-		this.surveyService.addLogoPath(this.surveyId,"/upload/"+newFileName);
+		this.surveyService.addLogoPath(this.surveyId,"\\upload\\"+newFileName);
 		return "designSurveysAction";
 	}
 	
-	public boolean fileExist(){
-		Survey survey= this.surveyService.getSurvey(model.getId());
-		if(survey.getLogoPhotoPath()!=null){
-			String newPathName = this.servletContext.getRealPath("/upload")+"/"+survey.getLogoPhotoPath();
+	public boolean fileExist(String logoPhtotPath){
+		if(logoPhtotPath!=null&&logoPhtotPath.length()>0){
+			//直接调用方法时，this.servletContext不会自动注入，所以选择使用ServletActionContext获取servletContext
+			String newPathName = ServletActionContext.getServletContext().getRealPath("")+logoPhtotPath;
 			File newFile = new File(newPathName);
 			return newFile.exists();
 		}

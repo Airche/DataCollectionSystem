@@ -62,6 +62,7 @@
 			<tx:method name="clear*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="toogle*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="add*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="switch*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="new*" propagation="REQUIRED" isolation="DEFAULT" />
 			<!-- 读操作 -->

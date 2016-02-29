@@ -169,5 +169,14 @@ public class SurveyServiceImpl implements SurveyService {
 		this.surveyDao.batchEntityBySql(sql, logoPhotoPath,surveyId);
 	}
 
+	@Override
+	public void switchPageOrderNo(int surveyId, int srcOrderNo, int desOrderNo) {
+		Page srcPage = (Page) this.pageDao.findEntityByHql("FROM Page WHERE surveyid=? and orderno=?", surveyId,srcOrderNo).get(0);
+		Page desPage = (Page) this.pageDao.findEntityByHql("FROM Page WHERE surveyid=? and orderno=?", surveyId,desOrderNo).get(0);
+		String sql = "update PAGES set orderno=? where id=?";
+		this.pageDao.batchEntityBySql(sql, srcOrderNo,desPage.getId());
+		this.pageDao.batchEntityBySql(sql, desOrderNo,srcPage.getId());
+	}
+
 
 }

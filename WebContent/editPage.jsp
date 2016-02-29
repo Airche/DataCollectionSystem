@@ -9,6 +9,7 @@
 	<form action="${pageContext.request.contextPath}/PageAction_saveOrUpdatePage">
 		<input type="hidden" name="surveyId"  value="${surveyId}"/>  <br/>
 		<input type="hidden" name="id"  value="${pageId}"/>  <br/>
+		<input type="hidden" name="orderNo"  value="${model.orderNo}"/>  <br/>
 		标题:<input type="text" name="title"  value="${model.title}"/>  <br/>
 		描述:<input type="text" name="description"  value="${model.description}"/>  <br/>
 		<input type="submit" value="确定">

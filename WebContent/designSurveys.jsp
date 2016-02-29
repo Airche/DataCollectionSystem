@@ -10,18 +10,28 @@
 </head>
 <body>
 	<jsp:include page="head.jsp"></jsp:include>
-	<br /> ${model.id} ${model.title}	
-	<jsp:useBean id="surveyAction" class="com.legend.action.SurveyAction" scope="page" />
-	<c:if test="${surveyAction.fileExist()}">
-		<img  src="${pageContext.request.contextPath}${model.logoPhotoPath}" height="25px" width="25pxs">
+	<br />
+	 ${model.id} ${model.title}	
+	<c:set var="pageCount" value="${fn:length(model.pages)}" />  
+	页面个数：${pageCount}
+	<c:if test="${surveyAction.fileExist(model.logoPhotoPath)}">
+		<img  src="${pageContext.request.contextPath}${model.logoPhotoPath}" height="20px" width="15pxs"/>
 	</c:if>
 	<a href="${pageContext.request.contextPath}/SurveyAction_toAddLogoPage?surveyId=${model.id}">增加LOGO</a>
-	<a href="${pageContext.request.contextPath}/PageAction_toAddPagePage?surveyId=${model.id}">增加页</a><br/>
+	<a href="${pageContext.request.contextPath}/PageAction_toAddPagePage?surveyId=${model.id}&orderNo=${pageCount+1}">增加页</a>
+	<br/>
 	<c:forEach var="p" items="${model.pages}">
 	<br/>
  		 页面标题:${p.id} ${p.title}	 <a href="${pageContext.request.contextPath}/PageAction_deletePage?surveyId=${model.id}&pageId=${p.id}">删除页面</a>		   
  		 <a href="${pageContext.request.contextPath}/PageAction_toEditPagePage?surveyId=${model.id}&pageId=${p.id}">编辑页</a> 
- 		 <a href="${pageContext.request.contextPath }/QuestionAction_toSelectQuestionType?surveyId=${model.id}&pageId=${p.id}">增加问题</a><br/> 
+ 		 <a href="${pageContext.request.contextPath }/QuestionAction_toSelectQuestionType?surveyId=${model.id}&pageId=${p.id}">增加问题</a>
+ 		 <c:if test="${p.orderNo gt 1}">
+			<a href="${pageContext.request.contextPath}/PageAction_upMovePage?surveyId=${model.id}&pageCount=${pageCount}&orderNo=${p.orderNo}">上移</a>  ${upMove}
+		 </c:if>
+ 		 <c:if test="${p.orderNo lt pageCount}">
+			<a href="${pageContext.request.contextPath}/PageAction_downMovePage?surveyId=${model.id}&pageCount=${pageCount}&orderNo=${p.orderNo}">下移</a>
+		</c:if>
+ 		 <br/> 
  		 <c:forEach var="q"  items="${p.questions}">
  		 	问题类型:${q.id} ${q.title}		
  		 		<a href="${pageContext.request.contextPath}/QuestionAction_toEditQuestionPage?surveyId=${model.id}&pageId=${p.id}&id=${q.id}">编辑问题</a>

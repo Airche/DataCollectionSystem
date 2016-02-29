@@ -15,7 +15,12 @@
 				class="com.legend.action.intercepor.LoginInterceptor"></interceptor>
 			<interceptor-stack name="DataCollectionStack">
 				<interceptor-ref name="LoginInterceptor" />
-				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="defaultStack">
+						<!-- 设置文件拦截器文件大小 -->
+						<param name="fileUpload.maximumSize">60000</param>
+						<param name="fileUpload.allowedExtensions">.jpg,.ico</param>
+						<param name="fileUpload.allowedTypes">image/x-iconimage/jpg,image/jpeg,image/pjpeg,image/gif,image/png,image/bmp</param>
+				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
 
@@ -50,11 +55,13 @@
 					<param name="actionName">SurveyAction_mySurveys</param>
 			</result>
 			<result name="addLogoPage">/addLogo.jsp</result>
+			<result name="input">${inputPage}</result>
 			<result>/index.jsp</result>
 		</action>
 		<action name="PageAction_*" class="pageAction" method="{1}">
 			<result name="addPage">/editPage.jsp</result>
 			<result name="editPage">/editPage.jsp</result>
+			<result name="error">/editPage.jsp</result>
 		</action>
 		<action name="QuestionAction_*" class="questionAction" method="{1}">
 			<result name="selectQuestionTypePage">/selectQuestionType.jsp</result>

@@ -18,6 +18,7 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 	private User user;
 	private int surveyId;
 	private int pageId;
+	private int pageCount;
 	
 	@Resource(name="surveyService")
 	private SurveyService surveyService;
@@ -47,6 +48,20 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 		return "designSurveysAction";
 	}
 	
+	public String upMovePage(){
+		if(model.getOrderNo()>1){			
+			this.surveyService.switchPageOrderNo(this.surveyId,model.getOrderNo(),model.getOrderNo()-1);
+		}
+		return "designSurveysAction";
+	}
+	
+	public String downMovePage(){
+		if(model.getOrderNo()<pageCount){			
+			this.surveyService.switchPageOrderNo(this.surveyId,model.getOrderNo(),model.getOrderNo()+1);
+		}
+		return "designSurveysAction";
+	}
+	
 	public String deletePage(){
 		this.surveyService.deletePage(pageId);
 		return "designSurveysAction";
@@ -67,5 +82,15 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 	public void setPageId(int pageId) {
 		this.pageId = pageId;
 	}
+
+	public int getPageCount() {
+		return pageCount;
+	}
+
+	public void setPageCount(int pageCount) {
+		this.pageCount = pageCount;
+	}
+
+	
 	
 }

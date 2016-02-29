@@ -10,6 +10,7 @@ public class Page {
 	private String description;
 	private Survey survey;
 	private Set<Question> questions = new HashSet<Question>();
+	private Integer orderNo;
 
 	public Integer getId() {
 		return id;
@@ -50,5 +51,15 @@ public class Page {
 	public void setQuestions(Set<Question> questions) {
 		this.questions = questions;
 	}
+
+	public Integer getOrderNo() {
+		return orderNo;
+	}
+
+	public void setOrderNo(Integer orderNo) {
+		this.orderNo = orderNo;
+	}
+	
+	
 
 }

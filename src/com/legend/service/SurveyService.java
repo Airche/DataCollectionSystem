@@ -43,4 +43,6 @@ public interface SurveyService {
 
 	void addLogoPath(int surveyId, String string);
 
+	void switchPageOrderNo(int surveyId, int orderNo, int i);
+
 }
