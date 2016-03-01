@@ -116,10 +116,10 @@ public class SurveyAction extends BaseAction<Survey> implements UserAware,Servle
 	
 	public String addLogo(){
 		String newFileName = System.nanoTime()+this.logoFileName.substring(this.logoFileName.lastIndexOf("."));
-		String newPathName = this.servletContext.getRealPath("\\upload")+"\\"+newFileName;
+		String newPathName = this.servletContext.getRealPath("/upload")+"/"+newFileName;
 		File newFile = new File(newPathName);
 		logo.renameTo(newFile);
-		this.surveyService.addLogoPath(this.surveyId,"\\upload\\"+newFileName);
+		this.surveyService.addLogoPath(this.surveyId,"/upload/"+newFileName);
 		return "designSurveysAction";
 	}
 	

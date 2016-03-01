@@ -14,6 +14,7 @@
 	 ${model.id} ${model.title}	
 	<c:set var="pageCount" value="${fn:length(model.pages)}" />  
 	页面个数：${pageCount}
+	<jsp:useBean id="surveyAction" class="com.legend.action.SurveyAction" scope="page" />
 	<c:if test="${surveyAction.fileExist(model.logoPhotoPath)}">
 		<img  src="${pageContext.request.contextPath}${model.logoPhotoPath}" height="20px" width="15pxs"/>
 	</c:if>
@@ -22,14 +23,16 @@
 	<br/>
 	<c:forEach var="p" items="${model.pages}">
 	<br/>
- 		 页面标题:${p.id} ${p.title}	 <a href="${pageContext.request.contextPath}/PageAction_deletePage?surveyId=${model.id}&pageId=${p.id}">删除页面</a>		   
+ 		 页面标题:${p.id} ${p.title}	
+ 		  <a href="${pageContext.request.contextPath}/PageAction_deletePage?surveyId=${model.id}&pageId=${p.id}">删除页面</a>		   
  		 <a href="${pageContext.request.contextPath}/PageAction_toEditPagePage?surveyId=${model.id}&pageId=${p.id}">编辑页</a> 
+ 		 <a href="${pageContext.request.contextPath}/PageAction_toCopyPagePage?surveyId=${model.id}&pageId=${p.id}">复制页</a> 
  		 <a href="${pageContext.request.contextPath }/QuestionAction_toSelectQuestionType?surveyId=${model.id}&pageId=${p.id}">增加问题</a>
  		 <c:if test="${p.orderNo gt 1}">
-			<a href="${pageContext.request.contextPath}/PageAction_upMovePage?surveyId=${model.id}&pageCount=${pageCount}&orderNo=${p.orderNo}">上移</a>  ${upMove}
+			<a href="${pageContext.request.contextPath}/PageAction_moveUpPage?surveyId=${model.id}&pageCount=${pageCount}&orderNo=${p.orderNo}">上移</a>
 		 </c:if>
  		 <c:if test="${p.orderNo lt pageCount}">
-			<a href="${pageContext.request.contextPath}/PageAction_downMovePage?surveyId=${model.id}&pageCount=${pageCount}&orderNo=${p.orderNo}">下移</a>
+			<a href="${pageContext.request.contextPath}/PageAction_moveDownPage?surveyId=${model.id}&pageCount=${pageCount}&orderNo=${p.orderNo}">下移</a>
 		</c:if>
  		 <br/> 
  		 <c:forEach var="q"  items="${p.questions}">

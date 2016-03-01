@@ -1,5 +1,8 @@
 package com.legend.action;
 
+import java.util.Iterator;
+import java.util.List;
+
 import javax.annotation.Resource;
 
 import org.springframework.context.annotation.Scope;
@@ -19,6 +22,7 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 	private int surveyId;
 	private int pageId;
 	private int pageCount;
+	private List<Survey> surveys;
 	
 	@Resource(name="surveyService")
 	private SurveyService surveyService;
@@ -48,14 +52,14 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 		return "designSurveysAction";
 	}
 	
-	public String upMovePage(){
+	public String moveUpPage(){
 		if(model.getOrderNo()>1){			
 			this.surveyService.switchPageOrderNo(this.surveyId,model.getOrderNo(),model.getOrderNo()-1);
 		}
 		return "designSurveysAction";
 	}
 	
-	public String downMovePage(){
+	public String moveDownPage(){
 		if(model.getOrderNo()<pageCount){			
 			this.surveyService.switchPageOrderNo(this.surveyId,model.getOrderNo(),model.getOrderNo()+1);
 		}
@@ -64,6 +68,23 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 	
 	public String deletePage(){
 		this.surveyService.deletePage(pageId);
+		return "designSurveysAction";
+	}
+	
+	public String toCopyPagePage(){
+		surveys = this.surveyService.findMySurveys(user);
+		Iterator<Survey> is = surveys.iterator();
+		while(is.hasNext()){
+			Survey survey= is.next();
+			if(survey.getId() == this.surveyId){
+				is.remove();
+			}
+		}
+		return "copyPage";
+	}
+	
+	public String doCopyPage(){
+		this.surveyService.copyPage(this.surveyId,this.pageId);
 		return "designSurveysAction";
 	}
 
@@ -89,6 +110,14 @@ public class PageAction extends BaseAction<Page> implements UserAware{
 
 	public void setPageCount(int pageCount) {
 		this.pageCount = pageCount;
+	}
+
+	public List<Survey> getSurveys() {
+		return surveys;
+	}
+
+	public void setSurveys(List<Survey> surveys) {
+		this.surveys = surveys;
 	}
 
 	

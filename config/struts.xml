@@ -18,8 +18,8 @@
 				<interceptor-ref name="defaultStack">
 						<!-- 设置文件拦截器文件大小 -->
 						<param name="fileUpload.maximumSize">60000</param>
-						<param name="fileUpload.allowedExtensions">.jpg,.ico</param>
-						<param name="fileUpload.allowedTypes">image/x-iconimage/jpg,image/jpeg,image/pjpeg,image/gif,image/png,image/bmp</param>
+						<param name="fileUpload.allowedExtensions">.jpg,.ico,.png</param>
+						<param name="fileUpload.allowedTypes">image/x-iconimage/jpg,image/jpeg,image/pjpeg,image/gif,image/png,image/bmp,image/x-icon</param>
 				</interceptor-ref>
 			</interceptor-stack>
 		</interceptors>
@@ -61,6 +61,7 @@
 		<action name="PageAction_*" class="pageAction" method="{1}">
 			<result name="addPage">/editPage.jsp</result>
 			<result name="editPage">/editPage.jsp</result>
+			<result name="copyPage">/copyPage.jsp</result>
 			<result name="error">/editPage.jsp</result>
 		</action>
 		<action name="QuestionAction_*" class="questionAction" method="{1}">
@@ -74,6 +75,10 @@
 			<result name="6">/matrixNormalQuestionDesign.jsp</result>
 			<result name="7">/matrixNormalQuestionDesign.jsp</result>
 			<result name="8">/matrixSelectQuestionDesign.jsp</result>
+		</action>
+		<action name="EngageSurveyAction_*" class="engageSurveyAction" method="{1}">
+			<result name="availableSurveyPage">/availableSurvey.jsp</result>
+			<result name="engageSurveyPage">/engageSurvey.jsp</result>
 		</action>
 	</package>
 </struts>

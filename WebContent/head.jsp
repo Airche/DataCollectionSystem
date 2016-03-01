@@ -8,6 +8,7 @@
 	 <a href="${pageContext.request.contextPath}/SurveyAction_mySurveys">我的调查</a>		
 	 <a href="${pageContext.request.contextPath}/SurveyAction_mySurveysForPage?curPage=1&pageSize=10&nextForward=0">我的调查分页</a>		
 	 <a href="${pageContext.request.contextPath}/SurveyAction_newSurvey">新建调查</a>
+	 <a href="${pageContext.request.contextPath}/EngageSurveyAction_toAvailableSurveyPage">参与调查</a>
 	 <s:debug></s:debug>
 </body>
 </html>

@@ -1,5 +1,7 @@
 package com.legend.service.impl;
 
+import java.io.IOException;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
@@ -13,6 +15,7 @@ import com.legend.model.Question;
 import com.legend.model.Survey;
 import com.legend.model.User;
 import com.legend.service.SurveyService;
+import com.legend.util.DataUtil;
 import com.legend.util.validateUtil;
 
 @Service("surveyService")
@@ -178,5 +181,44 @@ public class SurveyServiceImpl implements SurveyService {
 		this.pageDao.batchEntityBySql(sql, desOrderNo,srcPage.getId());
 	}
 
+	@Override
+	public void copyPage(int surveyId, int pageId) {
+		Survey survey = (Survey) this.surveyDao.getEntity(Survey.class, surveyId);
+		Page page = (Page) this.pageDao.getEntity(Page.class, pageId);
+		page.getQuestions().size();			//防止问题集合懒加载
+		try {
+			Page newPage = (Page) DataUtil.ObjectCopy(page);
+			newPage.setSurvey(survey);
+			newPage.setOrderNo(survey.getPages().size()+1);
+			this.pageDao.saveEntity(newPage);
+			for(Question q:newPage.getQuestions()){
+				this.questionDao.saveEntity(q);
+			}
+		} catch (ClassNotFoundException | IOException e) {
+			e.printStackTrace();
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public List<Survey> findMyAvailableSurveys(User user) {
+		String hql = "FROM Survey WHERE user =? AND closed =? ";
+		return this.surveyDao.findEntityByHql(hql, user,true);
+	}
+
+	@Override
+	public Page getFirstPage(int surveyId) {
+		String hql = "FROM Page Where surveyid=? order by orderNo asc";
+		Page page = (Page) this.pageDao.findEntityByHql(hql, surveyId).get(0);
+		page.getQuestions().size();
+		page.getSurvey().getTitle();
+		return page;
+	}
+
+	@Override
+	public int getSurveyPageCount(int surveyId) {
+		Survey survey = (Survey) this.surveyDao.getEntity(Survey.class, surveyId);
+		return survey.getPages().size();
+	}
 
 }

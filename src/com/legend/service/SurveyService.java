@@ -45,4 +45,12 @@ public interface SurveyService {
 
 	void switchPageOrderNo(int surveyId, int orderNo, int i);
 
+	void copyPage(int surveyId, int pageId);
+
+	List<Survey> findMyAvailableSurveys(User user);
+
+	Page getFirstPage(int surveyId);
+
+	int getSurveyPageCount(int surveyId);
+
 }

@@ -1,14 +1,15 @@
 package com.legend.model;
 
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Page {
+public class Page implements Serializable{
 	private Integer id;
 	private String title="未定义";
 	private String description;
-	private Survey survey;
+	private transient Survey survey;
 	private Set<Question> questions = new HashSet<Question>();
 	private Integer orderNo;
 

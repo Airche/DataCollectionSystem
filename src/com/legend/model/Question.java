@@ -1,6 +1,8 @@
 package com.legend.model;
 
-public class Question {
+import java.io.Serializable;
+
+public class Question implements Serializable {
 	private Integer id;
 	//题型0-8
 	private Integer questionType;
