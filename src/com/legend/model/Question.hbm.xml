@@ -15,7 +15,7 @@
             <column name="TITLE" length="60"/>
         </property>
         <property name="options" type="java.lang.String">
-            <column name="OPTIONS" length="10"/>
+            <column name="OPTIONS" length="200"/>
         </property>
         <property name="other" type="java.lang.Boolean">
             <column name="OTHER" />

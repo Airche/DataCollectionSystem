@@ -53,4 +53,6 @@ public interface SurveyService {
 
 	int getSurveyPageCount(int surveyId);
 
+	Page getCurPage(int surveyId, int i);
+
 }

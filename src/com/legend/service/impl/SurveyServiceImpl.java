@@ -221,4 +221,13 @@ public class SurveyServiceImpl implements SurveyService {
 		return survey.getPages().size();
 	}
 
+	@Override
+	public Page getCurPage(int surveyId, int orderNo) {
+		String hql = "FROM Page Where surveyid=? and orderNo=?";
+		Page page = (Page) this.pageDao.findEntityByHql(hql, surveyId,orderNo).get(0);
+		page.getQuestions().size();
+		page.getSurvey().getTitle();
+		return page;
+	}
+
 }
