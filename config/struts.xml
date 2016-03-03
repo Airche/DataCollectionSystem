@@ -79,6 +79,15 @@
 		<action name="EngageSurveyAction_*" class="engageSurveyAction" method="{1}">
 			<result name="availableSurveyPage">/availableSurvey.jsp</result>
 			<result name="engageSurveyPage">/engageSurvey.jsp</result>
+			<result name="engageSurveyPageAction" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">EngageSurveyAction_entry</param>
+				<param name="surveyId">${surveyId}</param>
+			</result>
+			<result name="toAvailableSurveyPageAction" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">EngageSurveyAction_toAvailableSurveyPage</param>
+			</result>
 		</action>
 	</package>
 </struts>

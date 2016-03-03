@@ -19,58 +19,94 @@ import com.legend.service.SurveyService;
 
 @Controller("engageSurveyAction")
 @Scope("prototype")
-public class EngageSurveyAction extends BaseAction<Survey> implements UserAware,SessionAware,ParameterAware{
+public class EngageSurveyAction extends BaseAction<Survey> implements UserAware, SessionAware, ParameterAware {
 
+	private static final String ANSWERMAP = "AnswerMap";
+	private static final String CURSURVEY = "CurSurvey";
 	private User user;
 	private List<Survey> surveys;
 	private int surveyId;
 	private Page curPage;
 	private int orderNo;
-	private Map<String, Object>  sessionMap;
+	private Map<String, Object> sessionMap;
 	private int pageCount;
 	private Map<String, String[]> parameters;
-	
-	@Resource(name="surveyService")
+
+	@Resource(name = "surveyService")
 	private SurveyService surveyService;
-	
+
 	public String toAvailableSurveyPage() {
 		this.surveys = this.surveyService.findMyAvailableSurveys(user);
 		return "availableSurveyPage";
 	}
-	
-	public String entry(){
+
+	public String entry() {
 		Survey survey = this.surveyService.getSurvey(this.surveyId);
-		sessionMap.put("CurSurvey", survey);
+		sessionMap.put(CURSURVEY, survey);
 		this.pageCount = this.surveyService.getSurveyPageCount(this.surveyId);
 		this.curPage = this.surveyService.getFirstPage(this.surveyId);
-		sessionMap.put("AnswerMap", new HashMap<Integer,Map<String,String[]>>());
 		return "engageSurveyPage";
 	}
 
-	public String doEngageSurvey(){
-		Map<Integer,Map<String,String[]>> answerMap = (Map<Integer, Map<String, String[]>>) sessionMap.get("AnswerMap");
-		Map<String,String[]> pageMap = new HashMap<String,String[]>();
-		this.pageCount = this.surveyService.getSurveyPageCount(this.surveyId);
-		for(String key : this.parameters.keySet()){
-			if(key.startsWith("submit")){
-				if(key.endsWith("pre")){
-					this.curPage=this.surveyService.getCurPage(this.surveyId,this.orderNo-1);
-				}else if(key.endsWith("next")){
-					this.curPage=this.surveyService.getCurPage(this.surveyId,this.orderNo+1);			
-				}else if(key.endsWith("done")){
-					
-				}else if(key.endsWith("cancel")){
-					
-				}
-			}else if(key.startsWith("q_")){
+	public String doEngageSurvey() {
+
+		Map<Integer, Map<String, String[]>> answerMap = (Map<Integer, Map<String, String[]>>) sessionMap.get("AnswerMap");
+		if (answerMap == null) {
+			answerMap = new HashMap<Integer, Map<String, String[]>>();
+		}
+		Map<String, String[]> pageMap = new HashMap<String, String[]>();
+		String submit = null;
+		for (String key : this.parameters.keySet()) {
+			if (key.startsWith("q_")) {
 				pageMap.put(key, this.parameters.get(key));
+			} else if (key.startsWith("submit")) {
+				if (key.endsWith("pre")) {
+					submit = "pre";
+				} else if (key.endsWith("next")) {
+					submit = "next";
+				} else if (key.endsWith("done")) {
+					submit = "done";
+				} else if (key.endsWith("cancel")) {
+					submit = "cancel";
+				}
 			}
 		}
 		answerMap.put(this.orderNo, pageMap);
-		sessionMap.put("AnswerMap", answerMap);
+		sessionMap.put(ANSWERMAP, answerMap);
+
+		if (submit.endsWith("pre")) {
+			this.curPage = this.surveyService.getCurPage(this.surveyId, this.orderNo - 1);
+		} else if (submit.endsWith("next")) {
+			this.curPage = this.surveyService.getCurPage(this.surveyId, this.orderNo + 1);
+		} else if (submit.endsWith("done")) {
+			// TODO 答案入库
+			//this.surveyService.saveAnswer(this.surveyId, sessionMap.get(ANSWERMAP));
+			clearSessionData();
+			return "toAvailableSurveyPageAction";
+		} else if (submit.endsWith("cancel")) {
+			clearSessionData();
+			return "engageSurveyPageAction";
+		}
+
 		return "engageSurveyPage";
 	}
+
+	private void clearSessionData() {
+		sessionMap.remove(ANSWERMAP);
+		sessionMap.remove(CURSURVEY);
+	}
 	
+	public boolean chkContain(String[] sessionOptValues,String opt){
+		if(sessionOptValues!=null&&sessionOptValues.length>0&&opt!=null){
+			for(String sessionOptValue : sessionOptValues){
+				if(sessionOptValue.equals(opt)){
+					return true;
+				}
+			}
+		}
+		return false;
+	}
+
 	public List<Survey> getSurveys() {
 		return surveys;
 	}
@@ -125,6 +161,5 @@ public class EngageSurveyAction extends BaseAction<Survey> implements UserAware,
 	public void setOrderNo(int orderNo) {
 		this.orderNo = orderNo;
 	}
-	
-	
+
 }
