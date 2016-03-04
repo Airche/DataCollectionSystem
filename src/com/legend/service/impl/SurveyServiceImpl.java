@@ -1,21 +1,26 @@
 package com.legend.service.impl;
 
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
+import java.util.UUID;
 
 import javax.annotation.Resource;
 
 import org.springframework.stereotype.Service;
 
 import com.legend.dao.BaseDao;
+import com.legend.model.Answer;
 import com.legend.model.Page;
 import com.legend.model.Question;
 import com.legend.model.Survey;
 import com.legend.model.User;
 import com.legend.service.SurveyService;
 import com.legend.util.DataUtil;
+import com.legend.util.StringDataUtil;
 import com.legend.util.validateUtil;
 
 @Service("surveyService")
@@ -228,6 +233,26 @@ public class SurveyServiceImpl implements SurveyService {
 		page.getQuestions().size();
 		page.getSurvey().getTitle();
 		return page;
+	}
+
+	@Override
+	public void saveAnswer(int surveyId, Map<Integer, Map<String, String[]>> map) {
+		String uuid = UUID.randomUUID().toString();
+		Date answerTime = new Date();
+		for(Map<String, String[]> m : map.values()){
+			Set<Entry<String, String[]>> entrys = m.entrySet();
+			for(Entry<String, String[]> entry : entrys){
+				Answer answer = new Answer();
+				String key = entry.getKey();
+				String[] value = entry.getValue();
+				answer.setAnswerIds(StringDataUtil.ArrToString(value));
+				answer.setUuid(uuid);
+				answer.setAnswerTime(answerTime);
+				answer.setQuestionId(Integer.parseInt(key.substring(key.indexOf("_")+1)));
+				answer.setSurveyId(surveyId);
+				answerDao.saveEntity(answer);
+			}
+		}
 	}
 
 }

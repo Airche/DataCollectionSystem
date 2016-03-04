@@ -1,6 +1,7 @@
 package com.legend.service;
 
 import java.util.List;
+import java.util.Map;
 
 import com.legend.model.Page;
 import com.legend.model.Question;
@@ -54,5 +55,8 @@ public interface SurveyService {
 	int getSurveyPageCount(int surveyId);
 
 	Page getCurPage(int surveyId, int i);
+
+	void saveAnswer(int surveyId, Map<Integer, Map<String, String[]>> map);
+
 
 }

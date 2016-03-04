@@ -79,8 +79,7 @@ public class EngageSurveyAction extends BaseAction<Survey> implements UserAware,
 		} else if (submit.endsWith("next")) {
 			this.curPage = this.surveyService.getCurPage(this.surveyId, this.orderNo + 1);
 		} else if (submit.endsWith("done")) {
-			// TODO 答案入库
-			//this.surveyService.saveAnswer(this.surveyId, sessionMap.get(ANSWERMAP));
+			this.surveyService.saveAnswer(this.surveyId,  (Map<Integer, Map<String, String[]>>) sessionMap.get(ANSWERMAP));
 			clearSessionData();
 			return "toAvailableSurveyPageAction";
 		} else if (submit.endsWith("cancel")) {
