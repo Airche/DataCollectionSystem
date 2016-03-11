@@ -133,6 +133,11 @@ public class SurveyAction extends BaseAction<Survey> implements UserAware,Servle
 		return false;
 	}
 
+	public String analyzeSurvey(){
+		this.model = this.surveyService.getSurveyWithChildren(this.surveyId);
+		return "analyzeSurveyListPage";
+	}
+	
 	public List<Survey> getMySurveys() {
 		return mySurveys;
 	}

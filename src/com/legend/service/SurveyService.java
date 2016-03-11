@@ -3,6 +3,7 @@ package com.legend.service;
 import java.util.List;
 import java.util.Map;
 
+import com.legend.model.Answer;
 import com.legend.model.Page;
 import com.legend.model.Question;
 import com.legend.model.Survey;
@@ -57,6 +58,10 @@ public interface SurveyService {
 	Page getCurPage(int surveyId, int i);
 
 	void saveAnswer(int surveyId, Map<Integer, Map<String, String[]>> map);
+
+	List<Question> getQuestions(int surveyId);
+
+	List<Answer> getAnswers(int surveyId);
 
 
 }

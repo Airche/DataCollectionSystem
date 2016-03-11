@@ -52,6 +52,8 @@
 					<td><a href="${pageContext.request.contextPath}/SurveyAction_deleteSurvey?surveyId=${s.id}">删除</a></td>
 					<td><a href="${pageContext.request.contextPath}/SurveyAction_toogleStatus?surveyId=${s.id}">打开/关闭</a></td>
 					<td><a href="${pageContext.request.contextPath}/SurveyAction_clearAnswers?surveyId=${s.id}">清除调查</a></td>
+					<td><a href="${pageContext.request.contextPath}/SurveyAction_analyzeSurvey?surveyId=${s.id}">分析</a></td>
+					<td><a href="${pageContext.request.contextPath}/CollectionSurveyAction?surveyId=${s.id}">收集调查</a></td>
 				</tr>
 			</c:forEach>
 		</table>

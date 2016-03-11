@@ -1,7 +1,9 @@
 package com.legend.service.impl;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -253,6 +255,18 @@ public class SurveyServiceImpl implements SurveyService {
 				answerDao.saveEntity(answer);
 			}
 		}
+	}
+
+	@Override
+	public List<Question> getQuestions(int surveyId) {
+		String hql = "from Question where page.survey.id=?";
+		return questionDao.findEntityByHql(hql, surveyId);
+	}
+
+	@Override
+	public List<Answer> getAnswers(int surveyId) {
+		String hql = "from Answer where surveyId=? order by uuid asc";
+		return answerDao.findEntityByHql(hql, surveyId);
 	}
 
 }

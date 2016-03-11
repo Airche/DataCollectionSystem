@@ -23,7 +23,7 @@
 	<br/>
 	<c:forEach var="p" items="${model.pages}">
 	<br/>
- 		 页面标题:${p.id} ${p.title}	
+ 		 页面标题:${p.id} ${p.title}	s
  		  <a href="${pageContext.request.contextPath}/PageAction_deletePage?surveyId=${model.id}&pageId=${p.id}">删除页面</a>		   
  		 <a href="${pageContext.request.contextPath}/PageAction_toEditPagePage?surveyId=${model.id}&pageId=${p.id}">编辑页</a> 
  		 <a href="${pageContext.request.contextPath}/PageAction_toCopyPagePage?surveyId=${model.id}&pageId=${p.id}">复制页</a> 
