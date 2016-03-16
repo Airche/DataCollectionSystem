@@ -9,6 +9,8 @@
 	 <a href="${pageContext.request.contextPath}/SurveyAction_mySurveysForPage?curPage=1&pageSize=10&nextForward=0">我的调查分页</a>		
 	 <a href="${pageContext.request.contextPath}/SurveyAction_newSurvey">新建调查</a>
 	 <a href="${pageContext.request.contextPath}/EngageSurveyAction_toAvailableSurveyPage">参与调查</a>
-	 <s:debug></s:debug>
+	 <a href="${pageContext.request.contextPath}/RightAction_findAllRights">权限管理</a>
+	 <a href="${pageContext.request.contextPath}/RoleAction_findAllRoles">角色管理</a>
+	 <br/>
 </body>
 </html>

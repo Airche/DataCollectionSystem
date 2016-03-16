@@ -140,6 +140,8 @@ public class app {
 		sheet.addMergedRegion(d);
 		
 		wb.write(new FileOutputStream("f:/poi.xls"));
+		
+		System.out.println(1|2|4|8);
 	}
 
 }

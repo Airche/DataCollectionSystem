@@ -1,5 +1,6 @@
 package com.legend.service.impl;
 
+import java.lang.reflect.ParameterizedType;
 import java.util.List;
 
 import com.legend.dao.BaseDao;
@@ -8,6 +9,14 @@ import com.legend.service.BaseService;
 public abstract class BaseServiceImpl<T> implements BaseService<T> {
 
 	private BaseDao<T> baseDao;
+	
+	private Class<T> clazz;
+	
+	@SuppressWarnings("unchecked")
+	public BaseServiceImpl(){
+		ParameterizedType type =  (ParameterizedType) this.getClass().getGenericSuperclass();
+		clazz = (Class<T>) type.getActualTypeArguments()[0];
+	}
 	
 	//此处不进行注入，子类进行覆盖此方法，子类中进行注解注入
 	public void setBaseDao(BaseDao<T> baseDao) {
@@ -54,4 +63,14 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return baseDao.findEntityByHql(hql, objects);
 	}
 
+	@Override
+	public List<T> findAllEntities(){
+		String hql = "from "+clazz.getSimpleName();
+		return baseDao.findEntityByHql(hql);
+	}
+	
+	@Override
+	public Object[] uniqueResult(String hql,Object...objects){
+		return baseDao.uniqueResult(hql, objects);
+	}
 }

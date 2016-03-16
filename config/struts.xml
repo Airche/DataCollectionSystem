@@ -13,7 +13,10 @@
 		<interceptors>
 			<interceptor name="LoginInterceptor"
 				class="com.legend.action.intercepor.LoginInterceptor"></interceptor>
+			<interceptor name="CatchUrlInterceptor"
+				class="com.legend.action.intercepor.CatchUrlInterceptor"></interceptor>
 			<interceptor-stack name="DataCollectionStack">
+				<interceptor-ref name="CatchUrlInterceptor" />
 				<interceptor-ref name="LoginInterceptor" />
 				<interceptor-ref name="defaultStack">
 						<!-- 设置文件拦截器文件大小 -->
@@ -115,5 +118,26 @@
                 <param name="bufferSize">1024</param>  
 			</result>
 		</action>
+		
+		<action name="RightAction_*" class="rightAction" method="{1}">
+			<result name="rightListPage">/rightList.jsp</result>
+			<result name="addRightPage">/editRight.jsp</result>
+			<result name="editRightPage">/editRight.jsp</result>
+			<result name="rightListPageAction" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">RightAction_findAllRights</param>
+			</result>
+		</action>
+		
+		<action name="RoleAction_*" class="roleAction" method="{1}">
+			<result name="roleListPage">/roleList.jsp</result>
+			<result name="addRolePage">/editRole.jsp</result>
+			<result name="editRolePage">/editRole.jsp</result>
+			<result name="roleListPageAction" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">RoleAction_findAllRoles</param>
+			</result>
+		</action>
+		
 	</package>
 </struts>

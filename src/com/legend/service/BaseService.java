@@ -13,4 +13,7 @@ public interface BaseService<T> {
 	public	T loadEntity(Class<T> t,Integer i);
 	public T getEntity(Class<T> t,Integer i);
 	public List<T> findEntityByHql(String hql,Object...objects);
+	
+	public List<T> findAllEntities();
+	public Object[] uniqueResult(String hql,Object...objects);
 }

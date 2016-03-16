@@ -66,6 +66,7 @@
 			<tx:method name="copy*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="new*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="append*" propagation="REQUIRED" isolation="DEFAULT" />
 			<!-- 读操作 -->
 			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT"
 				read-only="true" />

@@ -8,6 +8,7 @@ import javax.annotation.Resource;
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate4.HibernateCallback;
 import org.springframework.orm.hibernate4.HibernateTemplate;
 
@@ -64,6 +65,7 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 			}
 		});
 	}
+	
 
 	@Override
 	public T loadEntity(Class<T> t, Integer i) {
@@ -83,6 +85,20 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 	@Override
 	public List<T> findEntityByHqlForPage(T t,final int offset,final int length) {
 		return (List<T>) hibernateTemplate.findByExample(t, offset, length);
+	}
+	
+	@Override
+	public Object[] uniqueResult(String hql,Object...objects){
+		Object[] arr = null;
+		final String tempsql = hql;
+		SessionFactory sessionFactory = hibernateTemplate.getSessionFactory();
+		Session session = sessionFactory.getCurrentSession();
+		Query query = session.createQuery(hql);
+		for(int i=0;i<objects.length;++i){
+			query.setParameter(i, objects[i]);
+		}
+		arr = (Object[]) query.uniqueResult();
+		return arr;
 	}
 
 }

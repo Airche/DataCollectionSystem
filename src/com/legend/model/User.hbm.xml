@@ -23,5 +23,9 @@
         <property name="regDate" type="timestamp">
             <column name="REGDATE" />
         </property>
+        <set name="roles" table="USER_ROLE_LINK">
+        	<key column="USER_ID" />
+        	<many-to-many class="com.legend.model.security.Role" column="ROLE_ID"/>
+        </set>
     </class>
 </hibernate-mapping>

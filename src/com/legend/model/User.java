@@ -1,6 +1,10 @@
 package com.legend.model;
 
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
+
+import com.legend.model.security.Role;
 
 public class User {
 	private Integer id;
@@ -9,6 +13,7 @@ public class User {
 	private String password;
 	private String nickName;
 	private Date regDate;
+	private Set<Role> roles = new HashSet<Role>();
 
 	public Integer getId() {
 		return id;
@@ -58,4 +63,13 @@ public class User {
 		this.regDate = regDate;
 	}
 
+	public Set<Role> getRoles() {
+		return roles;
+	}
+
+	public void setRoles(Set<Role> roles) {
+		this.roles = roles;
+	}
+
+	
 }
