@@ -11,13 +11,13 @@
 	<package name="DataCollectionSystem" namespace="/" extends="struts-default,jfreechart-default">
 
 		<interceptors>
-			<interceptor name="LoginInterceptor"
-				class="com.legend.action.intercepor.LoginInterceptor"></interceptor>
+			<interceptor name="RightFilterInterceptor"
+				class="com.legend.action.intercepor.RightFilterInterceptor"></interceptor>
 			<interceptor name="CatchUrlInterceptor"
 				class="com.legend.action.intercepor.CatchUrlInterceptor"></interceptor>
 			<interceptor-stack name="DataCollectionStack">
 				<interceptor-ref name="CatchUrlInterceptor" />
-				<interceptor-ref name="LoginInterceptor" />
+				<interceptor-ref name="RightFilterInterceptor" />
 				<interceptor-ref name="defaultStack">
 						<!-- 设置文件拦截器文件大小 -->
 						<param name="fileUpload.maximumSize">60000</param>
@@ -31,6 +31,7 @@
 
 		<global-results>
 			<result name="login" type="redirect">/index.jsp</result>
+			<result name="error_no_right" type="redirect">/index.jsp</result>
 			<result name="designSurveysAction" type="redirectAction">
 				<param name="namespace">/</param>
 				<param name="actionName">SurveyAction_getSurvey</param>
@@ -136,6 +137,15 @@
 			<result name="roleListPageAction" type="redirectAction">
 				<param name="namespace">/</param>
 				<param name="actionName">RoleAction_findAllRoles</param>
+			</result>
+		</action>
+		
+		<action name="UserAuthorizeAction_*" class="userAuthorizeAction" method="{1}">
+			<result name="userAuthorizeListPage">/userAuthorizeList.jsp</result>
+			<result name="editAuthorizePage">/editAuthorize.jsp</result>
+			<result name="userListPageAction" type="redirectAction">
+				<param name="namespace">/</param>
+				<param name="actionName">UserAuthorizeAction_findAllUsers</param>
 			</result>
 		</action>
 		

@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
+import java.util.Set;
+
+import com.legend.model.BaseEntity;
 
 public class DataUtil {
 	
@@ -25,5 +28,17 @@ public class DataUtil {
 		return copy;
 	}
 	
+	public static  String extractWhereStringIds(Set<? extends BaseEntity> baseEntitys) {
+		String where = "";
+		if(baseEntitys!=null&&baseEntitys.size()!=0){
+			String temp = "" ;
+			for(BaseEntity baseEntity: baseEntitys){
+				temp += baseEntity.getId()+",";
+			}
+			temp = temp.substring(0, temp.lastIndexOf(','));
+			where = "where id not in ( "+ temp +")";
+		}
+		return where;
+	}
 	
 }

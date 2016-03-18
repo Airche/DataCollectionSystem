@@ -4,9 +4,10 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
+import com.legend.model.security.Right;
 import com.legend.model.security.Role;
 
-public class User {
+public class User extends BaseEntity {
 	private Integer id;
 	private String email;
 	private String name;
@@ -14,6 +15,24 @@ public class User {
 	private String nickName;
 	private Date regDate;
 	private Set<Role> roles = new HashSet<Role>();
+	private long[] rightSum;
+	private boolean superAdmin;
+	
+	public boolean isSuperAdmin() {
+		return superAdmin;
+	}
+
+	public void setSuperAdmin(boolean superAdmin) {
+		this.superAdmin = superAdmin;
+	}
+
+	public long[] getRightSum() {
+		return rightSum;
+	}
+
+	public void setRightSum(long[] rightSum) {
+		this.rightSum = rightSum;
+	}
 
 	public Integer getId() {
 		return id;
@@ -69,6 +88,26 @@ public class User {
 
 	public void setRoles(Set<Role> roles) {
 		this.roles = roles;
+	}
+
+	public void calculateRightSum() {
+		for(Role role : roles){
+			if(role.getRoleValue().equals("-1")){
+				this.superAdmin = true;
+				//释放资源
+				roles = null;
+				return ;
+			}
+			for(Right right : role.getRights())
+				rightSum[right.getRightPos()] |= right.getRightCode();
+		}
+		
+		//释放资源
+		roles = null;
+	}
+
+	public boolean hashRight(Right right) {
+		return (rightSum[right.getRightPos()] & right.getRightCode()) == 0 ? false : true;
 	}
 
 	

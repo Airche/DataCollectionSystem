@@ -15,4 +15,6 @@ public interface RightService extends BaseService<Right> {
 
 	List<Right> findNotInRange(Set<Right> rights);
 
+	int getMaxRightPos();
+
 }

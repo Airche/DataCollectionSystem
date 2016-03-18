@@ -2,7 +2,7 @@ package com.legend.model;
 
 import java.util.Date;
 
-public class Answer {
+public class Answer extends BaseEntity{
 	private Integer id;
 	private String answerIds;
 	private String otherAnswer;

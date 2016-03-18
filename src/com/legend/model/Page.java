@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Page implements Serializable{
+public class Page extends BaseEntity{
 	private Integer id;
 	private String title="未定义";
 	private String description;

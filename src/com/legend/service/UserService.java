@@ -11,4 +11,10 @@ public interface UserService extends BaseService<User> {
 
 	User validateLoginInfo(String email, String md5);
 
+	User getEntityWithChild(Integer userId);
+
+	void saveOrUpdateAuthorize(Integer userId, Integer[] ownRoles);
+
+	void clearAuthorize(Integer userId);
+
 }

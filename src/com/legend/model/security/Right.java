@@ -1,16 +1,22 @@
 package com.legend.model.security;
 
-import java.util.HashSet;
-import java.util.Set;
+import com.legend.model.BaseEntity;
 
-public class Right {
+public class Right extends BaseEntity{
 	private Integer id;
 	private String rightName = "未命名";
 	private String rightUrl;
 	private String rightDesc;
 	private Long rightCode;		//权限码
 	private Integer rightPos;				//权限位
+	private boolean common;
 	
+	public boolean isCommon() {
+		return common;
+	}
+	public void setCommon(boolean common) {
+		this.common = common;
+	}
 	public Integer getId() {
 		return id;
 	}

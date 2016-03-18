@@ -2,7 +2,7 @@ package com.legend.model;
 
 import java.io.Serializable;
 
-public class Question implements Serializable {
+public class Question extends BaseEntity {
 	private Integer id;
 	//题型0-8
 	private Integer questionType;

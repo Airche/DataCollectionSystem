@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
-public class Survey {
+public class Survey extends BaseEntity{
 	private Integer id;
 	private String title="未命名";
 	private String preText;

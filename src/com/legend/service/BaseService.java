@@ -1,6 +1,7 @@
 package com.legend.service;
 
 import java.util.List;
+import java.util.Set;
 
 public interface BaseService<T> {
 	//写入方法

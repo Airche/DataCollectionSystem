@@ -9,7 +9,9 @@ import org.springframework.stereotype.Service;
 
 import com.legend.dao.BaseDao;
 import com.legend.model.security.Right;
+import com.legend.model.security.Role;
 import com.legend.service.RightService;
+import com.legend.util.DataUtil;
 
 @Service("rightService")
 public class RightServiceImpl extends BaseServiceImpl<Right> implements RightService {
@@ -87,19 +89,14 @@ public class RightServiceImpl extends BaseServiceImpl<Right> implements RightSer
 
 	@Override
 	public List<Right> findNotInRange(Set<Right> rights) {
-		String hql = "from Right where ";
-		String where = null;
-		if(rights==null||rights.size()==0){
-			where = "1=1";
-		}else{
-			String temp = "" ;
-			for(Right r: rights){
-				temp += r.getId()+",";
-			}
-			temp = temp.substring(0, temp.lastIndexOf(','));
-			where = "id not in ( "+ temp +")";
-		}
-		hql += where ;
+		String hql = "from Right " + DataUtil.extractWhereStringIds(rights);
 		return this.findEntityByHql(hql);
+	}
+
+	@Override
+	public int getMaxRightPos() {
+		String hql = "select max(r.rightPos),max(r.rightCode) from Right r ";
+		Object[] arr = this.uniqueResult(hql);
+		return (int) arr[0];
 	}
 }

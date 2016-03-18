@@ -3,9 +3,9 @@ package com.legend.model.security;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.legend.model.User;
+import com.legend.model.BaseEntity;
 
-public class Role {
+public class Role extends BaseEntity{
 	
 	private Integer id;
 	private String roleName;

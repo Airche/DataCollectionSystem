@@ -6,11 +6,11 @@ import java.util.Map;
 import javax.annotation.Resource;
 
 import org.apache.struts2.interceptor.SessionAware;
-import org.apache.struts2.interceptor.validation.SkipValidation;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.legend.model.User;
+import com.legend.service.RightService;
 import com.legend.service.UserService;
 import com.legend.util.ByteConvUtil;
 import com.legend.util.DigestUtil;
@@ -23,6 +23,9 @@ public class LoginAction extends BaseAction<User> implements SessionAware {
 	
 	@Resource(name="userService")
 	private UserService userService;
+	
+	@Resource(name="rightService")
+	private RightService rightService;
 
 	public String toLoginPage(){
 		return "loginPage";
@@ -39,6 +42,12 @@ public class LoginAction extends BaseAction<User> implements SessionAware {
 			if(user == null){
 				this.addActionError("email/password错误");				
 			}else{
+				//初始化数组
+				int maxPos = this.rightService.getMaxRightPos();
+				user.setRightSum(new long[maxPos+1]);
+				
+				//计算权限总和
+				user.calculateRightSum();
 				this.sessionMap.put("user", user);
 			}
 		} catch (NoSuchAlgorithmException e) {

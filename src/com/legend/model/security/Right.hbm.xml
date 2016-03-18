@@ -23,5 +23,8 @@
         <property name="rightPos" type="java.lang.Integer" update="false">
             <column name="RIGHTPOS" />
         </property>
+     	<property name="common" type="java.lang.Boolean">
+            <column name="COMMON" />
+        </property>
     </class>
 </hibernate-mapping>
