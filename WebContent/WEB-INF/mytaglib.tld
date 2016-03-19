@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<taglib xmlns="http://java.sun.com/xml/ns/j2ee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee web-jsptaglibrary_2_0.xsd"
+	version="2.0">
+	<tlib-version>1.0</tlib-version>
+	<short-name>zz</short-name>
+	<uri>/mytaglib</uri>
+	<tag>
+		<name>a</name>
+		<tag-class>com.legend.tag.HyperLinkTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>href</name>
+			<required>true</required> 
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>input</name>
+		<tag-class>com.legend.tag.InputTag</tag-class>
+		<body-content>empty</body-content>
+		<attribute>
+			<name>type</name>
+			<required>true</required> 
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+		<attribute>
+			<name>value</name>
+			<required>true</required> 
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+	<tag>
+		<name>form</name>
+		<tag-class>com.legend.tag.FormTag</tag-class>
+		<body-content>scriptless</body-content>
+		<attribute>
+			<name>action</name>
+			<required>true</required> 
+			<rtexprvalue>true</rtexprvalue>
+		</attribute>
+	</tag>
+</taglib>

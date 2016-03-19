@@ -36,7 +36,9 @@ public class UserServiceImpl extends BaseServiceImpl<User> implements UserServic
 		String hql = "FROM User u where u.email=? and u.password=?";
 		List<User> us = this.findEntityByHql(hql, email,md5);
 		for(User u : us){
-			u.getRoles().size();
+			for(Role r : u.getRoles()){
+				r.getRights().size();
+			}
 		}
 		return validateUtil.isValid(us)?us.get(0):null;
 	}

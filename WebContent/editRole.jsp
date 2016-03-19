@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="/mytaglib" prefix="zz"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -22,8 +23,7 @@ function moveOption(obj1, obj2)
 } 
 </SCRIPT>
 <body>
-
-	<form action="${pageContext.request.contextPath}/RoleAction_saveOrUpdateRole">
+	<zz:form  action="${pageContext.request.contextPath}/RoleAction_saveOrUpdateRole">
 	
 		<input type="hidden" name="id"  value="${model.id}">	<br/>
 		角色名称:<input type="text" name="roleName"  value="${model.roleName}">	<br/>
@@ -49,8 +49,8 @@ function moveOption(obj1, obj2)
 			</c:forEach>
 		</select>
 		
-		<input type="submit" value="提交" />
-	</form>
+		<zz:input type="submit" value="提交" />
+	</zz:form>
 
 </body>
 </html>

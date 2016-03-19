@@ -9,10 +9,10 @@
 </head>
 <body>
 
-	<jsp:include page="head.jsp"/>
 
 	<c:if test="${user==null }">
 	<form action="${pageContext.request.contextPath}/LoginAction_doLogin" method="post">
+		<h1>用户信息调查系统</h1>
 		登录邮箱:<input type="text" name="email"  value="${email}"/>		${errors.email }	<br/>
 		登录密码:<input type="password" name="password" value="${password}"/>		${errors.password }	<br/>
 		<input type="submit" value="登录" />		<a href="${pageContext.request.contextPath }/RegAction_toRegPage">注册</a>
@@ -20,6 +20,7 @@
 	</form>
 	</c:if>
 	<c:if test="${user!=null}">
+	<jsp:include page="head.jsp"/>
 		欢迎:${user.nickName }  <a href="${pageContext.request.contextPath }/LoginAction_doLogout">退出</a>  <br/>
 	</c:if>
 	<s:debug></s:debug>
