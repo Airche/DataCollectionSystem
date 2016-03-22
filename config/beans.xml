@@ -67,6 +67,7 @@
 			<tx:method name="batch*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="new*" propagation="REQUIRED" isolation="DEFAULT" />
 			<tx:method name="append*" propagation="REQUIRED" isolation="DEFAULT" />
+			<tx:method name="create*" propagation="REQUIRED" isolation="DEFAULT" />
 			<!-- 读操作 -->
 			<tx:method name="load*" propagation="REQUIRED" isolation="DEFAULT"
 				read-only="true" />
@@ -80,12 +81,32 @@
 		</tx:attributes>
 	</tx:advice>
 
+	<bean id="logger" class="com.legend.advice.Logger" />
+	
 	<aop:config>
 		<aop:pointcut id="serviceOperation"
 			expression="execution(public * com.legend.service..*.*(..))" />
 		<aop:advisor advice-ref="txAdvice"  pointcut-ref="serviceOperation"/>
+		<aop:aspect id="logerAspect" ref="logger">
+			<aop:pointcut id="logOperation"
+			expression="(execution(public * com.legend.service..*.save*(..)) 
+								or execution(public * com.legend.service..*.update*(..)) 
+								or execution(public * com.legend.service..*.delete*(..)) 
+								or execution(public * com.legend.service..*.clear*(..)) 
+								or execution(public * com.legend.service..*.toogle*(..)) 
+								or execution(public * com.legend.service..*.add*(..)) 
+								or execution(public * com.legend.service..*.switch*(..)) 
+								or execution(public * com.legend.service..*.copy*(..)) 
+								or execution(public * com.legend.service..*.batch*(..)) 
+								or execution(public * com.legend.service..*.new*(..)) 
+								or execution(public * com.legend.service..*.append*(..)) 
+								or execution(public * com.legend.service..*.record*(..)) )
+								and !bean(logService)
+								" />
+			<aop:around method="record" pointcut-ref="logOperation"/>
+		</aop:aspect>
 	</aop:config>
-
+	
 	<bean name="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory" />
 	</bean>

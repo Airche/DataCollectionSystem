@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 2016-2-26 15:08:40 by Hibernate Tools 3.5.0.Final -->
+<hibernate-mapping package="com.legend.model">
+    <class name="Log" table="LOGS">
+        <id name="id" type="java.lang.Integer">
+            <column name="ID" />
+            <generator class="native" />
+        </id>
+        <property name="operator" type="java.lang.String">
+            <column name="OPERATOR"  length="100"/>
+        </property>
+        <property name="operName" type="java.lang.String">
+            <column name="OPERNAME"  length="100"/>
+        </property>
+        <property name="operParams" type="java.lang.String">
+            <column name="OPERPARAMS"  length="500"/>
+        </property>
+        <property name="operResult" type="java.lang.String">
+            <column name="OPERRESULT"  length="50"/>
+        </property>
+        <property name="resultMsg" type="java.lang.String">
+            <column name="RESULTMSG"  length="500"/>
+        </property>
+        <property name="operTime" type="timestamp">
+            <column name="OPERTIME" />
+        </property>
+    </class>
+</hibernate-mapping>

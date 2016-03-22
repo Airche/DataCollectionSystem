@@ -110,5 +110,10 @@ public class User extends BaseEntity {
 		return (rightSum[right.getRightPos()] & right.getRightCode()) == 0 ? false : true;
 	}
 
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", email=" + email + "]";
+	}
+
 	
 }

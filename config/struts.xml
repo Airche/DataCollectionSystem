@@ -149,5 +149,9 @@
 			</result>
 		</action>
 		
+		<action name="LogAction_*" class="logAction" method="{1}">
+			<result name="logListPage">/logList.jsp</result>
+		</action>
+		
 	</package>
 </struts>

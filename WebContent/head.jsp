@@ -13,6 +13,7 @@
 	 <a href="${pageContext.request.contextPath}/RightAction_findAllRights">权限管理</a>
 	 <a href="${pageContext.request.contextPath}/RoleAction_findAllRoles">角色管理</a>
 	 <zz:a href="${pageContext.request.contextPath}/UserAuthorizeAction_findAllUsers">用户授权管理</zz:a>
+	 <a href="${pageContext.request.contextPath}/LogAction_findAllLogs">日志管理</a>
 	 <br/>
 	 <s:debug></s:debug>
 </body>
