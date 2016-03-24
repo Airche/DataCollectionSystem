@@ -25,6 +25,7 @@ public class IniRightListener implements ApplicationListener,ServletContextAware
 
 	@Resource(name="rightService")
 	private RightService rightService ; 
+	
 	private ServletContext servletContext;
 	
 	@Override

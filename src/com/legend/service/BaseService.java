@@ -17,4 +17,5 @@ public interface BaseService<T> {
 	
 	public List<T> findAllEntities();
 	public Object[] uniqueResult(String hql,Object...objects);
+	public List<T> executeSqlQuery(Class clazz,String sql,Object...objects);
 }

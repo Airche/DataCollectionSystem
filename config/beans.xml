@@ -49,7 +49,7 @@
 	<tx:advice id="txAdvice" transaction-manager="txManager">
 		<!-- 
 			1、事务传播设置是 REQUIRED
-			2、隔离级别是 DEFAULT；未提交读（脏读、不可重复读、幻读）-提交读（不可重复读、幻读）-重复读（幻读）-顺序
+			2、隔离级别是 DEFAULT；未提交读（脏读、不可重复读、幻读）-提交读（不可重复读、幻读）-重复读（幻读）-顺序读
 			3、事务是 读/写
 			4、事务超时默认是依赖于事务系统的，或者事务超时没有被支持。
 			5、任何 RuntimeException 将触发事务回滚，但是任何 checked Exception 将不触发事务回滚

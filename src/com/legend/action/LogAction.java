@@ -24,6 +24,11 @@ public class LogAction extends BaseAction<Log> {
 		return "logListPage";
 	}
 
+	public String findNearestLogs(){
+		this.allLogs = this.logService.findNearestLogs(-1);
+		return "logListPage";
+	}
+	
 	public List<Log> getAllLogs() {
 		return allLogs;
 	}

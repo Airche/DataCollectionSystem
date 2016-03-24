@@ -7,6 +7,7 @@ import javax.annotation.Resource;
 
 import org.hibernate.HibernateException;
 import org.hibernate.Query;
+import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.springframework.orm.hibernate4.HibernateCallback;
@@ -99,6 +100,20 @@ public abstract class BaseDaoImpl<T> implements BaseDao<T> {
 		}
 		arr = (Object[]) query.uniqueResult();
 		return arr;
+	}
+	
+	public List<T> executeSqlQuery(Class clazz , String sql,Object...objects){
+
+		SessionFactory sessionFactory = hibernateTemplate.getSessionFactory();
+		Session session = sessionFactory.getCurrentSession();
+		SQLQuery query = session.createSQLQuery(sql);
+		if(clazz!=null){
+			query.addEntity(clazz);
+		}
+		for(int i=0;i<objects.length;++i){
+			query.setParameter(i, objects[i]);
+		}
+		return query.list();
 	}
 
 }

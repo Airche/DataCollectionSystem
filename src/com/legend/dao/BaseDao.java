@@ -19,4 +19,5 @@ public interface BaseDao<T> {
 	public List<T> findEntityByHql(String hql,Object...objects);
 	public List<T> findEntityByHqlForPage(T t,final int offset,final int length);
 	public Object[] uniqueResult(String hql,Object...objects);
+	public List<T> executeSqlQuery(Class clazz,String sql,Object...objects);
 }

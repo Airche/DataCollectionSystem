@@ -74,4 +74,9 @@ public abstract class BaseServiceImpl<T> implements BaseService<T> {
 		return baseDao.uniqueResult(hql, objects);
 	}
 	
+	@Override
+	public List<T> executeSqlQuery(Class clazz,String sql,Object...objects){
+		return baseDao.executeSqlQuery(clazz, sql, objects);
+	}
+	
 }
