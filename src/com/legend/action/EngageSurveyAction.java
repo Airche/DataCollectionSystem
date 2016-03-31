@@ -12,6 +12,7 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Controller;
 
 import com.legend.action.intercepor.UserAware;
+import com.legend.datasource.MyToken;
 import com.legend.model.Page;
 import com.legend.model.Survey;
 import com.legend.model.User;
@@ -79,6 +80,14 @@ public class EngageSurveyAction extends BaseAction<Survey> implements UserAware,
 		} else if (submit.endsWith("next")) {
 			this.curPage = this.surveyService.getCurPage(this.surveyId, this.orderNo + 1);
 		} else if (submit.endsWith("done")) {
+			
+			//绑定token到当前线程
+			MyToken myToken = new MyToken();
+			Survey survey = new Survey();
+			survey.setId(this.surveyId);
+			myToken.setSurvey(survey);
+			MyToken.bindToken(myToken);
+			
 			this.surveyService.saveAnswer(this.surveyId,  (Map<Integer, Map<String, String[]>>) sessionMap.get(ANSWERMAP));
 			clearSessionData();
 			return "toAvailableSurveyPageAction";

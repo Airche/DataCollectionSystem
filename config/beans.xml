@@ -2,12 +2,14 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
 	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:cache="http://www.springframework.org/schema/cache"
 	xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
-
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+         http://www.springframework.org/schema/cache
+     http://www.springframework.org/schema/cache/spring-cache.xsd">
 
 	<context:annotation-config />
 	<context:component-scan
@@ -17,7 +19,8 @@
 
 	<context:property-placeholder location="classpath:jdbc.properties" />
 
-	<bean name="dataSource" destroy-method="close"
+	<!-- 主数据源 -->
+	<bean name="dataSource_1" destroy-method="close"
 		class="com.mchange.v2.c3p0.ComboPooledDataSource">
 		<property name="driverClass" value="${jdbc.driverClass}" />
 		<property name="jdbcUrl" value="${jdbc.jdbcUrl}" />
@@ -29,10 +32,25 @@
 		<property name="initialPoolSize" value="${c3p0.initialPoolSize}" />
 		<property name="acquireIncrement" value="${c3p0.acquireIncrement}" />
 	</bean>
+	
+	<!-- 辅数据源 -->
+	<bean name="dataSource_2" parent="dataSource_1">
+		<property name="jdbcUrl" value="${jdbc.jdbcUrl}" />
+	</bean>
+	
+	<bean id="MyDataSourceRouter" class="com.legend.datasource.MyDataSourceRouter">
+		<property name="targetDataSources">
+			<map>
+				<entry key="odd" value-ref="dataSource_1"/>
+				<entry key="even" value-ref="dataSource_2"/>
+			</map>
+		</property>
+		<property name="defaultTargetDataSource" ref="dataSource_1"/>
+	</bean>
 
 	<bean id="sessionFactory"
 		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-		<property name="dataSource" ref="dataSource" />
+		<property name="dataSource" ref="MyDataSourceRouter" />
 		<property name="configLocation" value="classpath:hibernate.cfg.xml" />
 		<property name="mappingDirectoryLocations">
 			<list>
@@ -80,14 +98,45 @@
 				read-only="true" />
 		</tx:attributes>
 	</tx:advice>
+	
+	
+	<bean id="cacheManagerFactoryBean" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation"  value="classpath:ehcache.xml"/>
+	</bean>
+	
+	<bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
+		<property name="cacheManager"  ref="cacheManagerFactoryBean"/>
+	</bean>
+	
+	<bean id="myKeyGenerator" class="com.legend.cache.MyKeyGenerator"/>
+	
+	<cache:advice id="cacheAdvice" cache-manager="cacheManager" key-generator="myKeyGenerator">
+		<cache:caching cache="DataCollection">
+			<cache:cacheable method="get*"/>
+			<cache:cacheable method="load*"/>
+			<cache:cacheable method="find*"/>
+			
+			<cache:cache-evict method="save*" all-entries="true"/>
+			<cache:cache-evict method="update*" all-entries="true"/>
+			<cache:cache-evict method="delete*" all-entries="true"/>
+			<cache:cache-evict method="clear*" all-entries="true"/>
+			<cache:cache-evict method="toggle*" all-entries="true"/>
+			<cache:cache-evict method="move*" all-entries="true"/>
+			<cache:cache-evict method="batch*" all-entries="true"/>
+			<cache:cache-evict method="execute*" all-entries="true"/>
+		</cache:caching>
+	</cache:advice>
 
 	<bean id="logger" class="com.legend.advice.Logger" />
 	
 	<aop:config>
 		<aop:pointcut id="serviceOperation"
 			expression="execution(public * com.legend.service..*.*(..))" />
-		<aop:advisor advice-ref="txAdvice"  pointcut-ref="serviceOperation"/>
-		<aop:aspect id="logerAspect" ref="logger">
+		<aop:advisor advice-ref="txAdvice"  pointcut-ref="serviceOperation" order="2"/>
+		<aop:advisor advice-ref="cacheAdvice" pointcut="execution(public * com.legend.service..*.get*(..))
+																						or execution(public * com.legend.service..*.load*(..))
+																						or execution(public * com.legend.service..*.find*(..))" order="0"/>
+		<aop:aspect id="logerAspect" ref="logger" order="1">
 			<aop:pointcut id="logOperation"
 			expression="(execution(public * com.legend.service..*.save*(..)) 
 								or execution(public * com.legend.service..*.update*(..)) 
@@ -106,6 +155,7 @@
 			<aop:around method="record" pointcut-ref="logOperation"/>
 		</aop:aspect>
 	</aop:config>
+	
 	
 	<bean name="hibernateTemplate" class="org.springframework.orm.hibernate4.HibernateTemplate">
 		<property name="sessionFactory" ref="sessionFactory" />

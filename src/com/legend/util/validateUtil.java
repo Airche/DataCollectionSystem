@@ -10,49 +10,47 @@ import com.legend.model.User;
 import com.legend.model.security.Right;
 
 public class validateUtil {
-	
-	public static boolean isValid(String src){
-		return !(src==null||src.trim().length()==0);
+
+	public static boolean isValid(String src) {
+		return !(src == null || src.trim().length() == 0);
 	}
-	
-	public static boolean isValid(Collection col){
-		if(col==null||col.isEmpty()){
+
+	public static boolean isValid(Collection col) {
+		if (col == null || col.isEmpty()) {
 			return false;
 		}
 		return true;
 	}
-	
-	public static boolean hasRight(String ns , String actionName , HttpServletRequest req){
-		if(!isValid(ns) || ns.equals("/")){
-			ns="";
+
+	public static boolean hasRight(String ns, String actionName, HttpServletRequest req) {
+		if (!isValid(ns) || ns.equals("/")) {
+			ns = "";
 		}
-		if(actionName.contains("?")){
-			actionName = actionName.substring(0,actionName.indexOf('?'));
+		if (actionName.contains("?")) {
+			actionName = actionName.substring(0, actionName.indexOf('?'));
 		}
-		String url = ns + "/" +actionName;
-		HttpSession session =  req.getSession();
-		Map<String,Right> map = (Map<String, Right>)session.getServletContext().getAttribute("all_rights_map");
+		String url = ns + "/" + actionName;
+		HttpSession session = req.getSession();
+		Map<String, Right> map = (Map<String, Right>) session.getServletContext().getAttribute("all_rights_map");
 		Right r = map.get(url);
-		if(r == null || r.isCommon()){
+		if (r == null || r.isCommon()) {
 			return true;
-		}else{
+		} else {
 			User user = (User) session.getAttribute("user");
-			if(user == null){
+			if (user == null) {
 				return false;
-			}else{
-				if(user.isSuperAdmin()){
+			} else {
+				if (user.isSuperAdmin()) {
 					return true;
-				}
-				else{
-					if(user.hashRight(r)){
+				} else {
+					if (user.hashRight(r)) {
 						return true;
-					}
-					else{
+					} else {
 						return false;
 					}
 				}
 			}
 		}
 	}
-	
+
 }
