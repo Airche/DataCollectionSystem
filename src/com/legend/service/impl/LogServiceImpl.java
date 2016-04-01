@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 import com.legend.dao.BaseDao;
 import com.legend.model.Log;
 import com.legend.service.LogService;
-import com.legend.uitl.LogUtil;
+import com.legend.util.LogUtil;
 
 @Service("logService")
 public class LogServiceImpl extends BaseServiceImpl<Log> implements LogService {

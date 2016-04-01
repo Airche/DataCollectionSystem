@@ -7,7 +7,7 @@ import org.quartz.JobExecutionException;
 import org.springframework.scheduling.quartz.QuartzJobBean;
 
 import com.legend.service.LogService;
-import com.legend.uitl.LogUtil;
+import com.legend.util.LogUtil;
 
 /**
  *	创建石英任务 

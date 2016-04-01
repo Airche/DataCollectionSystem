@@ -8,7 +8,7 @@ import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 
 import com.legend.service.LogService;
-import com.legend.uitl.LogUtil;
+import com.legend.util.LogUtil;
 
 /**
  * 初始化权限监听器，在spring初始化完成后立即调用.

@@ -1,4 +1,4 @@
-package com.legend.uitl;
+package com.legend.util;
 
 import java.util.Calendar;
 
